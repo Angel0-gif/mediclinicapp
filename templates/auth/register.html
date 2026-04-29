@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}New User{% endblock %}
+{% block page_title %}Create User Account{% endblock %}
+{% block content %}
+<div class="card" style="max-width:780px;">
+  <div class="ch"><span class="ct">New Staff / User Account</span></div>
+  <div class="cb">
+    <form method="post">{% csrf_token %}
+      <div class="fgrid">
+        <div class="fg"><label>First Name *</label><input type="text" name="first_name" required></div>
+        <div class="fg"><label>Last Name *</label><input type="text" name="last_name" required></div>
+        <div class="fg"><label>Username *</label><input type="text" name="username" required></div>
+        <div class="fg"><label>Email</label><input type="email" name="email"></div>
+        <div class="fg"><label>Password *</label><input type="password" name="password" required></div>
+        <div class="fg"><label>Phone</label><input type="text" name="phone"></div>
+        <div class="fg"><label>Role *</label>
+          <select name="role">
+            <option value="admin">Administrator</option>
+            <option value="doctor">Doctor</option>
+            <option value="nurse">Nurse</option>
+            <option value="cashier" selected>Cashier</option>
+            <option value="receptionist">Receptionist</option>
+            <option value="patient">Patient</option>
+          </select>
+        </div>
+      </div>
+      <div class="mt4 flex gap2">
+        <button type="submit" class="btn btn-pri">Create Account</button>
+        <a href="{% url 'staff_list' %}" class="btn btn-out">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

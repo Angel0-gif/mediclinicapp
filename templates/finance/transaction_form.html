@@ -1,0 +1,38 @@
+{% extends "base.html" %}{% block title %}New Transaction{% endblock %}{% block page_title %}Record Transaction{% endblock %}
+{% block content %}
+<div class="card" style="max-width:680px;">
+  <div class="ch"><span class="ct">Transaction Details</span></div>
+  <div class="cb">
+    <form method="post">{% csrf_token %}
+      <div class="fgrid">
+        <div class="fg"><label>Type *</label>
+          <select name="transaction_type" required>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select></div>
+        <div class="fg"><label>Category</label>
+          <select name="category"><option value="">— None —</option>
+            {% for c in categories %}<option value="{{ c.pk }}">{{ c.name }} ({{ c.transaction_type }})</option>{% endfor %}
+          </select></div>
+        <div class="fg"><label>Amount (XAF) *</label><input type="number" name="amount" step="0.01" required></div>
+        <div class="fg"><label>Payment Method *</label>
+          <select name="payment_method">
+            <option value="cash">Cash</option><option value="mobile">Mobile Money</option>
+            <option value="card">Card</option><option value="insurance">Insurance</option><option value="other">Other</option>
+          </select></div>
+        <div class="fg"><label>Date *</label><input type="date" name="date" value="{{ today }}" required></div>
+        <div class="fg"><label>Patient (optional)</label>
+          <select name="patient"><option value="">— None —</option>
+            {% for p in patients %}<option value="{{ p.pk }}">{{ p.full_name }}</option>{% endfor %}
+          </select></div>
+        <div class="fg full"><label>Description</label><textarea name="description" placeholder="Details…"></textarea></div>
+        <div class="fg"><label>Reference</label><input type="text" name="reference" placeholder="Invoice or receipt number"></div>
+      </div>
+      <div class="mt4 flex gap2">
+        <button type="submit" class="btn btn-pri">Record Transaction</button>
+        <a href="{% url 'transaction_list' %}" class="btn btn-out">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}{% block title %}Medical Record{% endblock %}{% block page_title %}Add Medical Record – {{ patient.full_name }}{% endblock %}
+{% block content %}
+<div class="card" style="max-width:820px;">
+  <div class="ch"><span class="ct">New Medical Record</span></div>
+  <div class="cb">
+    <form method="post">{% csrf_token %}
+      <div class="fg"><label>Chief Complaint *</label><textarea name="chief_complaint" required placeholder="Patient's main complaint…"></textarea></div>
+      <div class="fg"><label>Diagnosis *</label><textarea name="diagnosis" required placeholder="Clinical diagnosis…"></textarea></div>
+      <div class="fg"><label>Treatment / Plan *</label><textarea name="treatment" required placeholder="Prescribed treatment or management plan…"></textarea></div>
+      <div class="fgrid">
+        <div class="fg"><label>Additional Notes</label><textarea name="notes"></textarea></div>
+        <div class="fg"><label>Follow-up Date</label><input type="date" name="follow_up_date"></div>
+      </div>
+      <div class="mt4 flex gap2">
+        <button type="submit" class="btn btn-pri">Save Record</button>
+        <a href="{% url 'patient_detail' patient.pk %}" class="btn btn-out">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

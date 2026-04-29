@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>{% block title %}CLINICAPP{% endblock %}</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Health palette */
+  --pri:#00897b;        /* medical teal-green */
+  --pri-d:#00695c;
+  --pri-l:#e0f2f1;
+  --pri-mid:#4db6ac;
+  --acc:#43a047;        /* healthy green */
+  --acc-l:#e8f5e9;
+  --dan:#e53935;
+  --dan-l:#ffebee;
+  --warn:#fb8c00;
+  --warn-l:#fff3e0;
+  --info:#1e88e5;
+  --info-l:#e3f2fd;
+  /* Layout */
+  --bg:#f4f7f6;
+  --sb:#003d36;         /* deep medical green sidebar */
+  --sb2:#004d43;
+  --sbt:#80cbc4;
+  --sb-active:#00897b;
+  --card:#ffffff;
+  --bdr:#d0e8e4;
+  --bdr2:#b2dfdb;
+  --txt:#1a2e2b;
+  --mut:#5f7976;
+  --r:10px;
+  --sh:0 1px 4px rgba(0,89,77,.07),0 4px 18px rgba(0,89,77,.06);
+  --sw:252px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);display:flex;min-height:100vh;font-size:14px;}
+
+/* ── SIDEBAR ── */
+.sb{width:var(--sw);background:var(--sb);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;overflow-y:auto;}
+
+.sb-logo{padding:20px 16px 16px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:11px;}
+.sb-logo .ico{
+  width:38px;height:38px;
+  background:linear-gradient(135deg,#00897b,#43a047);
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,137,123,.4);
+}
+.sb-logo .ico svg{width:22px;height:22px;fill:#fff;}
+.sb-logo .nm{font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;color:#fff;line-height:1.2;}
+.sb-logo small{font-size:10px;color:var(--sbt);letter-spacing:.02em;}
+
+.sb-nav{flex:1;padding:10px 10px;}
+.nl{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:rgba(128,203,196,.5);padding:14px 10px 5px;font-weight:500;}
+
+.ni{display:flex;align-items:center;gap:9px;padding:8px 12px;border-radius:8px;margin-bottom:1px;
+    color:#80cbc4;text-decoration:none;font-size:13px;font-weight:400;transition:all .15s;}
+.ni:hover{background:rgba(0,137,123,.3);color:#e0f2f1;}
+.ni.active{background:var(--sb-active);color:#fff;box-shadow:0 2px 8px rgba(0,137,123,.35);}
+.ni svg{width:16px;height:16px;flex-shrink:0;opacity:.85;}
+.ni.active svg{opacity:1;}
+
+.sb-foot{padding:12px 10px;border-top:1px solid rgba(255,255,255,.07);}
+.ua{width:33px;height:33px;background:linear-gradient(135deg,#00897b,#43a047);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:600;color:#fff;font-size:12px;flex-shrink:0;}
+
+/* ── TOPBAR ── */
+.mc{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;min-height:100vh;}
+.tb{background:#fff;border-bottom:1px solid var(--bdr);padding:12px 26px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.pt{font-family:'DM Sans',sans-serif;font-size:18px;font-weight:600;color:var(--txt);}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:8px;font-size:13px;font-weight:500;border:none;cursor:pointer;text-decoration:none;transition:all .15s;font-family:inherit;}
+.btn-pri{background:var(--pri);color:#fff;}.btn-pri:hover{background:var(--pri-d);}
+.btn-suc{background:var(--acc);color:#fff;}.btn-suc:hover{background:#388e3c;}
+.btn-dan{background:var(--dan);color:#fff;}.btn-dan:hover{background:#c62828;}
+.btn-warn{background:var(--warn);color:#fff;}
+.btn-out{background:#fff;color:var(--txt);border:1.5px solid var(--bdr2);}.btn-out:hover{border-color:var(--pri);color:var(--pri);}
+.btn-info{background:var(--info);color:#fff;}
+.btn-sm{padding:5px 11px;font-size:12px;}
+.btn svg{width:14px;height:14px;}
+
+/* ── PAGE ── */
+.pc{padding:24px;flex:1;}
+
+/* ── ALERTS ── */
+.msgs{margin-bottom:18px;}
+.alert{padding:11px 15px;border-radius:8px;margin-bottom:7px;font-size:13px;display:flex;align-items:center;gap:8px;}
+.alert-success{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;}
+.alert-error{background:#ffebee;color:#c62828;border:1px solid #ef9a9a;}
+.alert-warning{background:#fff3e0;color:#e65100;border:1px solid #ffcc80;}
+
+/* ── CARDS ── */
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);border:1px solid var(--bdr);}
+.ch{padding:15px 20px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;}
+.ct{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:var(--txt);}
+.cb{padding:20px;}
+
+/* ── STAT CARDS ── */
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:14px;margin-bottom:22px;}
+.sc{background:#fff;border-radius:var(--r);padding:18px;border:1px solid var(--bdr);box-shadow:var(--sh);display:flex;align-items:center;gap:14px;position:relative;overflow:hidden;}
+.sc::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--sc-accent,var(--pri));}
+.si{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.si svg{width:21px;height:21px;}
+.si.teal{background:#e0f2f1;color:#00796b;}
+.si.green{background:#e8f5e9;color:#388e3c;}
+.si.red{background:#ffebee;color:#c62828;}
+.si.amber{background:#fff3e0;color:#e65100;}
+.si.blue{background:#e3f2fd;color:#1565c0;}
+.si.purple{background:#f3e5f5;color:#6a1b9a;}
+.sv{font-family:'DM Sans',sans-serif;font-size:22px;font-weight:600;line-height:1.1;color:var(--txt);}
+.sl{font-size:11.5px;color:var(--mut);margin-top:3px;font-weight:400;}
+
+/* ── TABLES ── */
+.tw{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{background:#f4f9f8;padding:9px 14px;text-align:left;font-size:11px;text-transform:uppercase;
+   letter-spacing:.07em;color:var(--mut);font-weight:600;border-bottom:2px solid var(--bdr);}
+td{padding:10px 14px;border-bottom:1px solid #f0f7f5;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#f9fdfc;}
+
+/* ── BADGES ── */
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:500;}
+.bg-green{background:#e8f5e9;color:#2e7d32;}
+.bg-teal{background:#e0f2f1;color:#00695c;}
+.bg-blue{background:#e3f2fd;color:#1565c0;}
+.bg-yellow{background:#fff8e1;color:#e65100;}
+.bg-red{background:#ffebee;color:#c62828;}
+.bg-gray{background:#f4f4f4;color:#546e7a;}
+.bg-purple{background:#f3e5f5;color:#6a1b9a;}
+
+/* ── FORMS ── */
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:16px;}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;}
+.full{grid-column:1/-1;}
+label{font-size:12.5px;font-weight:500;color:var(--mut);}
+input,select,textarea{
+  padding:8px 12px;border:1.5px solid var(--bdr);border-radius:8px;
+  font-size:13.5px;font-family:inherit;color:var(--txt);background:#fff;
+  transition:border-color .15s,box-shadow .15s;width:100%;
+}
+input:focus,select:focus,textarea:focus{
+  outline:none;border-color:var(--pri);box-shadow:0 0 0 3px rgba(0,137,123,.1);
+}
+textarea{resize:vertical;min-height:75px;}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--bdr);margin:18px 0;}
+
+/* ── UTILS ── */
+.mt4{margin-top:16px;}.mt6{margin-top:24px;}
+.flex{display:flex;}.ic{align-items:center;}.gap2{gap:8px;}.gap3{gap:12px;}.jb{justify-content:space-between;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;}
+.tmut{color:var(--mut);}.tsm{font-size:12.5px;}
+@media(max-width:768px){.g2,.g3{grid-template-columns:1fr;}.sb{transform:translateX(-100%);}.mc{margin-left:0;}}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:#f0f7f5;}
+::-webkit-scrollbar-thumb{background:#b2dfdb;border-radius:4px;}
+</style>
+{% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<!-- ══ SIDEBAR ══ -->
+<aside class="sb">
+  <div class="sb-logo">
+    <div class="ico">
+      <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H6v-.57c0-2 4-3.08 6-3.08s6 1.08 6 3.08V18z"/></svg>
+    </div>
+    <div><div class="nm">CLINICAPP</div><small>Clinic Management</small></div>
+  </div>
+
+  <nav class="sb-nav">
+    <div class="nl">Overview</div>
+    <a href="{% url 'dashboard' %}" class="ni {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>Dashboard
+    </a>
+
+    {% if request.user.profile.role != 'patient' %}
+    <div class="nl">Clinical</div>
+    <a href="{% url 'patient_list' %}" class="ni {% if 'patient' in request.resolver_match.url_name %}active{% endif %}">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>Patients
+    </a>
+    <a href="{% url 'appointment_list' %}" class="ni {% if 'appointment' in request.resolver_match.url_name %}active{% endif %}">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2z"/></svg>Appointments
+    </a>
+
+    <div class="nl">Pharmacy</div>
+    <a href="{% url 'medicine_list' %}" class="ni {% if request.resolver_match.url_name in 'medicine_list,medicine_create,stock_history' %}active{% endif %}">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.35C18 2.99 16.01 1 13.65 1c-1.3 0-2.48.56-3.33 1.44L9 3.77l-1.32-1.33C6.83 1.56 5.65 1 4.35 1 1.99 1 0 2.99 0 5.35c0 1.3.56 2.48 1.44 3.33L9 16.24l3-3V17h8c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>Medicines
+    </a>
+    <a href="{% url 'prescription_list' %}" class="ni {% if 'prescription' in request.resolver_match.url_name %}active{% endif %}">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>Prescriptions
+    </a>
+    <a href="{% url 'stock_history' %}" class="ni {% if request.resolver_match.url_name == 'stock_history' %}active{% endif %}">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>Stock History
+    </a>
+
+    <div class="nl">Finance</div>
+    <a href="{% url 'finance_dashboard' %}" class="ni {% if request.resolver_match.url_name == 'finance_dashboard' %}active{% endif %}">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>Finance
+    </a>
+    <a href="{% url 'transaction_list' %}" class="ni {% if request.resolver_match.url_name == 'transaction_list' %}active{% endif %}">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>Transactions
+    </a>
+    <a href="{% url 'bill_list' %}" class="ni {% if 'bill' in request.resolver_match.url_name %}active{% endif %}">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM16 18H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>Bills
+    </a>
+
+    {% if request.user.profile.role == 'admin' %}
+    <div class="nl">Human Resources</div>
+    <a href="{% url 'staff_list' %}" class="ni {% if 'staff' in request.resolver_match.url_name %}active{% endif %}">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>Staff
+    </a>
+    <a href="{% url 'attendance_today' %}" class="ni {% if request.resolver_match.url_name == 'attendance_today' %}active{% endif %}">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>Attendance
+    </a>
+    <a href="{% url 'payroll_list' %}" class="ni {% if 'payroll' in request.resolver_match.url_name %}active{% endif %}">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4v2l8 5 8-5V4zm0 4l-8 5-8-5v10h16V8z"/></svg>Payroll
+    </a>
+    <div class="nl">Analytics</div>
+    <a href="{% url 'reports_home' %}" class="ni {% if 'report' in request.resolver_match.url_name %}active{% endif %}">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>Reports
+    </a>
+    <a href="{% url 'register' %}" class="ni">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>New User
+    </a>
+    {% endif %}
+
+    {% else %}
+    <div class="nl">My Health</div>
+    <a href="{% url 'patient_portal' %}" class="ni active">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>My Portal
+    </a>
+    {% endif %}
+  </nav>
+
+  <div class="sb-foot">
+    <div class="flex ic gap2" style="padding:6px 8px;margin-bottom:4px;">
+      <div class="ua">{{ request.user.first_name|first|upper }}{{ request.user.last_name|first|upper }}</div>
+      <div style="overflow:hidden;">
+        <div style="font-size:13px;font-weight:500;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ request.user.get_full_name }}</div>
+        <div style="font-size:11px;color:var(--sbt);">{{ request.user.profile.role|title }}</div>
+      </div>
+    </div>
+    <a href="{% url 'profile' %}" class="ni" style="color:#80cbc4;">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>My Profile
+    </a>
+    <a href="{% url 'logout' %}" class="ni" style="color:#ef9a9a;">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>Sign Out
+    </a>
+  </div>
+</aside>
+
+<!-- ══ MAIN ══ -->
+<div class="mc">
+  <header class="tb">
+    <h1 class="pt">{% block page_title %}{% endblock %}</h1>
+    <div class="flex gap2 ic">{% block topbar_actions %}{% endblock %}</div>
+  </header>
+  <main class="pc">
+    {% if messages %}<div class="msgs">{% for m in messages %}<div class="alert alert-{{ m.tags|default:'success' }}">{{ m }}</div>{% endfor %}</div>{% endif %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+
+{% block extra_js %}{% endblock %}
+</body>
+</html>

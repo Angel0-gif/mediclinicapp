@@ -1,0 +1,9 @@
+{
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "startCommand": "python manage.py migrate && gunicorn clinic.wsgi",
+    "healthcheckPath": "/"
+  }
+}

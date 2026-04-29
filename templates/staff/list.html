@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% block title %}Staff{% endblock %}{% block page_title %}Staff Directory{% endblock %}
+{% block topbar_actions %}<a href="{% url 'register' %}" class="btn btn-pri">+ New Staff</a><a href="{% url 'attendance_today' %}" class="btn btn-out">Attendance</a>{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="tw"><table>
+    <thead><tr><th>Name</th><th>Role</th><th>Department</th><th>Employment</th><th>Hire Date</th><th>Salary (XAF)</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for s in staff %}
+    <tr>
+      <td><div style="font-weight:600;">{{ s.user.get_full_name }}</div><div class="tmut tsm">{{ s.user.email }}</div></td>
+      <td><span class="badge bg-blue">{{ s.user.profile.role|title }}</span></td>
+      <td>{{ s.get_department_display }}</td>
+      <td class="tmut">{{ s.get_employment_type_display }}</td>
+      <td class="tmut">{{ s.hire_date|date:"d M Y" }}</td>
+      <td style="font-weight:600;">{{ s.salary|floatformat:0 }}</td>
+      <td><a href="{% url 'staff_detail' s.pk %}" class="btn btn-out btn-sm">View</a></td>
+    </tr>
+    {% empty %}<tr><td colspan="7" style="text-align:center;padding:32px;color:#94a3b8;">No staff members.</td></tr>{% endfor %}
+    </tbody>
+  </table></div>
+</div>
+{% endblock %}

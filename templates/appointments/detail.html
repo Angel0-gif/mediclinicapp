@@ -1,0 +1,19 @@
+{% extends "base.html" %}{% block title %}Appointment Detail{% endblock %}{% block page_title %}Appointment Detail{% endblock %}
+{% block content %}
+<div class="card" style="max-width:600px;">
+  <div class="ch"><span class="ct">Appointment #{{ appt.pk }}</span>
+    <span class="badge {% if appt.status == 'completed' %}bg-green{% elif appt.status == 'cancelled' %}bg-red{% else %}bg-yellow{% endif %}">{{ appt.get_status_display }}</span>
+  </div>
+  <div class="cb">
+    <div class="fgrid">
+      <div><div class="tmut tsm">Patient</div><div style="font-weight:600;">{{ appt.patient.full_name }}</div></div>
+      <div><div class="tmut tsm">Doctor</div><div>{% if appt.doctor %}Dr. {{ appt.doctor.get_full_name }}{% else %}—{% endif %}</div></div>
+      <div><div class="tmut tsm">Date & Time</div><div>{{ appt.date|date:"d M Y" }} at {{ appt.time|time:"H:i" }}</div></div>
+      <div><div class="tmut tsm">Type</div><div>{{ appt.get_appointment_type_display }}</div></div>
+    </div>
+    {% if appt.reason %}<div class="mt4"><div class="tmut tsm">Reason</div><div>{{ appt.reason }}</div></div>{% endif %}
+    {% if appt.notes %}<div class="mt4"><div class="tmut tsm">Notes</div><div>{{ appt.notes }}</div></div>{% endif %}
+    <div class="mt4"><a href="{% url 'appointment_list' %}" class="btn btn-out">← Back</a></div>
+  </div>
+</div>
+{% endblock %}

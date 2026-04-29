@@ -1,0 +1,33 @@
+{% extends "base.html" %}{% block title %}Patients{% endblock %}{% block page_title %}Patients{% endblock %}
+{% block topbar_actions %}<a href="{% url 'patient_create' %}" class="btn btn-pri">+ New Patient</a>{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="ch">
+    <form method="get" class="flex ic gap2">
+      <input type="text" name="q" value="{{ q }}" placeholder="Search name, phone…" style="width:280px;">
+      <button class="btn btn-pri btn-sm" type="submit">Search</button>
+      {% if q %}<a href="{% url 'patient_list' %}" class="btn btn-out btn-sm">Clear</a>{% endif %}
+    </form>
+    <span class="tmut tsm">{{ patients|length }} patient(s)</span>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>Name</th><th>Age</th><th>Gender</th><th>Blood</th><th>Phone</th><th>Registered</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for p in patients %}
+    <tr>
+      <td class="tmut">{{ forloop.counter }}</td>
+      <td><a href="{% url 'patient_detail' p.pk %}" style="font-weight:600;color:#0ea5e9;text-decoration:none;">{{ p.full_name }}</a></td>
+      <td>{{ p.age }} yrs</td><td>{{ p.get_gender_display }}</td>
+      <td><span class="badge bg-red">{{ p.blood_group|default:"—" }}</span></td>
+      <td>{{ p.phone }}</td>
+      <td class="tmut">{{ p.registered_at|date:"d M Y" }}</td>
+      <td class="flex gap2">
+        <a href="{% url 'patient_detail' p.pk %}" class="btn btn-out btn-sm">View</a>
+        <a href="{% url 'patient_edit' p.pk %}" class="btn btn-out btn-sm">Edit</a>
+      </td>
+    </tr>
+    {% empty %}<tr><td colspan="8" style="text-align:center;padding:32px;color:#94a3b8;">No patients found.</td></tr>{% endfor %}
+    </tbody>
+  </table></div>
+</div>
+{% endblock %}

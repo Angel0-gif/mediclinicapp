@@ -1,0 +1,75 @@
+{% extends "base.html" %}{% block title %}Finance{% endblock %}{% block page_title %}Finance Overview{% endblock %}
+{% block topbar_actions %}
+<a href="{% url 'transaction_create' %}" class="btn btn-pri">+ Transaction</a>
+<a href="{% url 'bill_create' %}" class="btn btn-out">+ New Bill</a>
+{% endblock %}
+{% block extra_css %}<style>
+.bars30{display:flex;align-items:flex-end;height:120px;gap:3px;padding-top:8px;}
+.bw30{display:flex;flex-direction:column;align-items:center;flex:1;}
+.b30{width:100%;border-radius:2px 2px 0 0;min-height:1px;}
+.b30.inc{background:#0ea5e9;}.b30.exp{background:#f87171;}
+.bd30{font-size:9px;color:#94a3b8;margin-top:2px;}
+</style>{% endblock %}
+{% block content %}
+<div class="sg">
+  <div class="sc"><div class="si green"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg></div><div><div class="sv">{{ today_in|floatformat:0 }}</div><div class="sl">Income Today</div></div></div>
+  <div class="sc"><div class="si red"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg></div><div><div class="sv">{{ today_out|floatformat:0 }}</div><div class="sl">Expenses Today</div></div></div>
+  <div class="sc"><div class="si {% if today_net >= 0 %}green{% else %}red{% endif %}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div><div><div class="sv">{{ today_net|floatformat:0 }}</div><div class="sl">Net Today (XAF)</div></div></div>
+  <div class="sc"><div class="si green"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21z"/></svg></div><div><div class="sv">{{ month_in|floatformat:0 }}</div><div class="sl">Income This Month</div></div></div>
+  <div class="sc"><div class="si red"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4v2l8 5 8-5V4zm0 4l-8 5-8-5v10h16V8z"/></svg></div><div><div class="sv">{{ month_out|floatformat:0 }}</div><div class="sl">Expenses This Month</div></div></div>
+  <div class="sc"><div class="si {% if month_net >= 0 %}purple{% else %}red{% endif %}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg></div><div><div class="sv">{{ month_net|floatformat:0 }}</div><div class="sl">Net This Month (XAF)</div></div></div>
+</div>
+<div class="g2">
+  <div class="card">
+    <div class="ch"><span class="ct">Recent Transactions</span><a href="{% url 'transaction_list' %}" class="btn btn-out btn-sm">All</a></div>
+    <div class="tw"><table>
+      <thead><tr><th>Date</th><th>Type</th><th>Description</th><th>Amount</th><th>Method</th></tr></thead>
+      <tbody>
+      {% for t in recent %}
+      <tr>
+        <td class="tmut tsm">{{ t.date|date:"d M Y" }}</td>
+        <td><span class="badge {% if t.transaction_type == 'income' %}bg-green{% else %}bg-red{% endif %}">{{ t.transaction_type|title }}</span></td>
+        <td class="tmut">{{ t.description|truncatechars:50|default:t.category.name|default:"—" }}</td>
+        <td style="font-weight:700;">{{ t.amount|floatformat:0 }}</td>
+        <td class="tmut tsm">{{ t.get_payment_method_display }}</td>
+      </tr>
+      {% empty %}<tr><td colspan="5" style="text-align:center;padding:24px;color:#94a3b8;">No transactions yet.</td></tr>{% endfor %}
+      </tbody>
+    </table></div>
+  </div>
+  <div>
+    <div class="card">
+      <div class="ch"><span class="ct">Pending Bills</span><a href="{% url 'bill_list' %}" class="btn btn-out btn-sm">All Bills</a></div>
+      <div class="cb">
+        {% for b in pending_bills %}
+        <div style="padding:8px 0;border-bottom:1px solid #f1f5f9;">
+          <div class="flex jb ic">
+            <a href="{% url 'bill_detail' b.pk %}" style="font-weight:600;color:#0ea5e9;text-decoration:none;">{{ b.patient.full_name }}</a>
+            <span class="badge {% if b.status == 'partial' %}bg-yellow{% else %}bg-red{% endif %}">{{ b.get_status_display }}</span>
+          </div>
+          <div class="tmut tsm">Balance: {{ b.balance|floatformat:0 }} XAF</div>
+        </div>
+        {% empty %}<p class="tmut tsm" style="text-align:center;padding:16px;">No pending bills ✓</p>{% endfor %}
+      </div>
+    </div>
+    <div class="card mt4">
+      <div class="ch"><span class="ct">30-Day Cash Flow</span></div>
+      <div class="cb">
+        <div class="flex gap2" style="margin-bottom:8px;">
+          <span class="tsm flex ic gap2"><span style="width:8px;height:8px;background:#0ea5e9;border-radius:2px;display:inline-block;"></span>Income</span>
+          <span class="tsm flex ic gap2"><span style="width:8px;height:8px;background:#f87171;border-radius:2px;display:inline-block;"></span>Expense</span>
+        </div>
+        <div class="bars30" id="chart30"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const d={{chart_data|safe}};const mx=Math.max(...d.map(x=>Math.max(x.income,x.expense)),1);
+const c=document.getElementById('chart30');
+d.forEach(x=>{const w=document.createElement('div');w.className='bw30';
+const ih=Math.max((x.income/mx)*110,1);const eh=Math.max((x.expense/mx)*110,1);
+w.innerHTML=`<div style="display:flex;align-items:flex-end;gap:1px;height:110px;"><div class="b30 inc" style="height:${ih}px" title="Income: ${x.income}"></div><div class="b30 exp" style="height:${eh}px" title="Expense: ${x.expense}"></div></div><div class="bd30">${x.day.split('/')[0]}</div>`;
+c.appendChild(w);});
+</script>
+{% endblock %}

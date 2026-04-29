@@ -1,0 +1,44 @@
+{% extends "base.html" %}{% block title %}New Prescription{% endblock %}{% block page_title %}New Prescription{% endblock %}
+{% block content %}
+<div class="card" style="max-width:900px;">
+  <div class="ch"><span class="ct">Prescription Details</span></div>
+  <div class="cb">
+    <form method="post">{% csrf_token %}
+      <div class="fg"><label>Patient *</label>
+        <select name="patient" required>
+          <option value="">— Select Patient —</option>
+          {% for p in patients %}<option value="{{ p.pk }}" {% if patient and patient.pk == p.pk %}selected{% endif %}>{{ p.full_name }}</option>{% endfor %}
+        </select></div>
+      <div class="fg"><label>Notes</label><textarea name="notes" placeholder="General prescription notes…"></textarea></div>
+      <div style="border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin-top:12px;">
+        <div class="flex jb ic" style="margin-bottom:12px;">
+          <span style="font-weight:700;font-size:14px;">Medicines</span>
+          <button type="button" onclick="addRow()" class="btn btn-pri btn-sm">+ Add Medicine</button>
+        </div>
+        <table style="width:100%;font-size:13px;"><thead>
+          <tr><th>Medicine</th><th>Quantity</th><th>Dosage</th><th>Duration</th><th></th></tr>
+        </thead><tbody id="rxRows"></tbody></table>
+      </div>
+      <div class="mt4 flex gap2">
+        <button type="submit" class="btn btn-pri">Save Prescription</button>
+        <a href="{% url 'prescription_list' %}" class="btn btn-out">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+const meds = [{% for m in meds %}{"id":{{ m.pk }},"name":"{{ m.name }} ({{ m.quantity }} {{ m.get_unit_display }})"},{% endfor %}];
+function addRow(){
+  const tb = document.getElementById('rxRows');
+  const tr = document.createElement('tr');
+  const opts = meds.map(m=>`<option value="${m.id}">${m.name}</option>`).join('');
+  tr.innerHTML=`<td><select name="medicine" style="width:100%"><option value="">— Select —</option>${opts}</select></td>
+    <td><input type="number" name="quantity" value="1" min="1" style="width:70px;"></td>
+    <td><input type="text" name="dosage" placeholder="e.g. 1 tab 3x/day" style="width:100%;"></td>
+    <td><input type="text" name="duration" placeholder="e.g. 7 days" style="width:100%;"></td>
+    <td><button type="button" onclick="this.closest('tr').remove()" class="btn btn-dan btn-sm">✕</button></td>`;
+  tb.appendChild(tr);
+}
+addRow();
+</script>
+{% endblock %}

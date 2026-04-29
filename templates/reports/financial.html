@@ -1,0 +1,63 @@
+{% extends "base.html" %}{% block title %}Financial Report{% endblock %}{% block page_title %}Financial Report{% endblock %}
+{% block topbar_actions %}<a href="{% url 'reports_home' %}" class="btn btn-out">← Reports</a>{% endblock %}
+{% block extra_css %}<style>
+.bars-rep{display:flex;align-items:flex-end;height:120px;gap:4px;}
+.bwr{display:flex;flex-direction:column;align-items:center;flex:1;}
+.br{width:100%;border-radius:2px 2px 0 0;min-height:1px;}
+.br.i{background:#0ea5e9;}.br.e{background:#f87171;}
+.bdr{font-size:9px;color:#94a3b8;margin-top:2px;}
+</style>{% endblock %}
+{% block content %}
+<div class="card" style="margin-bottom:18px;">
+  <div class="cb">
+    <form method="get" class="flex ic gap2">
+      <label>From</label><input type="date" name="start" value="{{ start }}" style="width:160px;">
+      <label>To</label><input type="date" name="end" value="{{ end }}" style="width:160px;">
+      <button class="btn btn-pri btn-sm" type="submit">Generate</button>
+    </form>
+  </div>
+</div>
+<div class="sg">
+  <div class="sc"><div class="si green"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10z"/></svg></div><div><div class="sv">{{ total_in|floatformat:0 }}</div><div class="sl">Total Income (XAF)</div></div></div>
+  <div class="sc"><div class="si red"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 3v10h8V3h-8z"/></svg></div><div><div class="sv">{{ total_out|floatformat:0 }}</div><div class="sl">Total Expenses (XAF)</div></div></div>
+  <div class="sc"><div class="si {% if net >= 0 %}purple{% else %}red{% endif %}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 21h18V3z"/></svg></div><div><div class="sv">{{ net|floatformat:0 }}</div><div class="sl">Net Profit (XAF)</div></div></div>
+</div>
+<div class="g2">
+  <div class="card">
+    <div class="ch"><span class="ct">Income by Category</span></div>
+    <div class="tw"><table><thead><tr><th>Category</th><th>Amount (XAF)</th></tr></thead><tbody>
+    {% for c in income_by_cat %}<tr><td>{{ c.category__name|default:"Uncategorized" }}</td><td style="font-weight:700;color:#16a34a;">{{ c.total|floatformat:0 }}</td></tr>{% empty %}<tr><td colspan="2" style="text-align:center;padding:16px;color:#94a3b8;">No data.</td></tr>{% endfor %}
+    </tbody></table></div>
+  </div>
+  <div class="card">
+    <div class="ch"><span class="ct">Expenses by Category</span></div>
+    <div class="tw"><table><thead><tr><th>Category</th><th>Amount (XAF)</th></tr></thead><tbody>
+    {% for c in expense_by_cat %}<tr><td>{{ c.category__name|default:"Uncategorized" }}</td><td style="font-weight:700;color:#dc2626;">{{ c.total|floatformat:0 }}</td></tr>{% empty %}<tr><td colspan="2" style="text-align:center;padding:16px;color:#94a3b8;">No data.</td></tr>{% endfor %}
+    </tbody></table></div>
+  </div>
+</div>
+<div class="card mt4">
+  <div class="ch"><span class="ct">Daily Breakdown</span></div>
+  <div class="cb">
+    <div class="bars-rep" id="repChart"></div>
+  </div>
+  <div class="tw"><table><thead><tr><th>Date</th><th>Income</th><th>Expense</th><th>Net</th></tr></thead><tbody>
+  {% for d in daily %}
+  <tr>
+    <td class="tmut">{{ d.date }}</td>
+    <td style="color:#16a34a;">{{ d.income|floatformat:0 }}</td>
+    <td style="color:#dc2626;">{{ d.expense|floatformat:0 }}</td>
+    <td style="font-weight:700;{% if d.net >= 0 %}color:#16a34a;{% else %}color:#dc2626;{% endif %}">{{ d.net|floatformat:0 }}</td>
+  </tr>
+  {% endfor %}
+  </tbody></table></div>
+</div>
+<script>
+const d={{daily|safe}};const mx=Math.max(...d.map(x=>Math.max(x.income,x.expense)),1);
+const c=document.getElementById('repChart');
+d.forEach(x=>{const w=document.createElement('div');w.className='bwr';
+const ih=Math.max((x.income/mx)*110,1);const eh=Math.max((x.expense/mx)*110,1);
+w.innerHTML=`<div style="display:flex;align-items:flex-end;gap:1px;height:110px;"><div class="br i" style="height:${ih}px"></div><div class="br e" style="height:${eh}px"></div></div><div class="bdr">${x.date.slice(5)}</div>`;
+c.appendChild(w);});
+</script>
+{% endblock %}
