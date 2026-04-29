@@ -79,3 +79,5 @@ DATABASE_URL = os.environ.get('DATABASE_URL')
 if DATABASE_URL:
     import dj_database_url
     DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
+
+CSRF_TRUSTED_ORIGINS = ['https://mediclinicapp.up.railway.app', 'https://truthful-connection-environment.up.railway.app']
