@@ -1,11 +1,27 @@
 {% extends "base.html" %}{% block title %}Appointments{% endblock %}{% block page_title %}Appointments{% endblock %}
 {% block topbar_actions %}<a href="{% url 'appointment_create' %}" class="btn btn-pri">+ New Appointment</a>{% endblock %}
+
+{% block extra_css %}<style>
+.filter-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.filter-bar input[type=date],
+.filter-bar select{width:auto;flex:1;min-width:130px;}
+@media(max-width:520px){
+  .filter-bar input[type=date],
+  .filter-bar select{min-width:100%;flex:none;}
+  /* Hide less-important columns on small screens */
+  .col-reason{display:none;}
+  /* Make status update inline forms stack nicely */
+  .status-form{flex-direction:column;align-items:flex-start;gap:4px;}
+  .status-form select{width:100%;}
+}
+</style>{% endblock %}
+
 {% block content %}
 <div class="card" style="margin-bottom:18px;">
   <div class="cb">
-    <form method="get" class="flex ic gap2" style="flex-wrap:wrap;">
-      <input type="date" name="date" value="{{ filter_date }}" style="width:180px;">
-      <select name="status" style="width:160px;">
+    <form method="get" class="filter-bar">
+      <input type="date" name="date" value="{{ filter_date }}">
+      <select name="status">
         <option value="">All Statuses</option>
         {% for v,l in status_choices %}<option value="{{ v }}" {% if status == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
       </select>
@@ -17,19 +33,19 @@
 <div class="card">
   <div class="ch"><span class="ct">Appointments for {{ filter_date }}</span><span class="tmut tsm">{{ appointments|length }} total</span></div>
   <div class="tw"><table>
-    <thead><tr><th>Time</th><th>Patient</th><th>Type</th><th>Doctor</th><th>Reason</th><th>Status</th><th>Actions</th></tr></thead>
+    <thead><tr><th>Time</th><th>Patient</th><th>Type</th><th>Doctor</th><th class="col-reason">Reason</th><th>Status</th><th>Actions</th></tr></thead>
     <tbody>
     {% for a in appointments %}
     <tr>
-      <td style="font-weight:700;color:#0ea5e9;">{{ a.time|time:"H:i" }}</td>
-      <td><a href="{% url 'patient_detail' a.patient.pk %}" style="font-weight:600;color:#0ea5e9;text-decoration:none;">{{ a.patient.full_name }}</a></td>
-      <td>{{ a.get_appointment_type_display }}</td>
-      <td>{% if a.doctor %}Dr. {{ a.doctor.last_name }}{% else %}<span class="tmut">—</span>{% endif %}</td>
-      <td class="tmut">{{ a.reason|truncatechars:50|default:"—" }}</td>
+      <td style="font-weight:700;color:#0ea5e9;white-space:nowrap;">{{ a.time|time:"H:i" }}</td>
+      <td><a href="{% url 'patient_detail' a.patient.pk %}" style="font-weight:600;color:#0ea5e9;text-decoration:none;white-space:nowrap;">{{ a.patient.full_name }}</a></td>
+      <td style="white-space:nowrap;">{{ a.get_appointment_type_display }}</td>
+      <td style="white-space:nowrap;">{% if a.doctor %}Dr. {{ a.doctor.last_name }}{% else %}<span class="tmut">—</span>{% endif %}</td>
+      <td class="tmut col-reason">{{ a.reason|truncatechars:50|default:"—" }}</td>
       <td><span class="badge {% if a.status == 'completed' %}bg-green{% elif a.status == 'cancelled' %}bg-red{% elif a.status == 'in_progress' %}bg-blue{% elif a.status == 'confirmed' %}bg-purple{% else %}bg-yellow{% endif %}">{{ a.get_status_display }}</span></td>
       <td>
-        <form method="post" action="{% url 'appointment_update_status' a.pk %}" class="flex gap2 ic">{% csrf_token %}
-          <select name="status" style="width:130px;padding:4px 8px;font-size:12px;">
+        <form method="post" action="{% url 'appointment_update_status' a.pk %}" class="flex gap2 ic status-form">{% csrf_token %}
+          <select name="status" style="min-width:110px;padding:4px 8px;font-size:12px;">
             {% for v,l in status_choices %}<option value="{{ v }}" {% if a.status == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
           </select>
           <button class="btn btn-pri btn-sm" type="submit">Update</button>
