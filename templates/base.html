@@ -1,5 +1,6 @@
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>{% block title %}CLINICAPP{% endblock %}</title>
@@ -24,35 +25,29 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);displa
 .sb{width:var(--sw);background:var(--sb);display:flex;flex-direction:column;
     position:fixed;top:0;left:0;height:100vh;z-index:200;overflow-y:auto;
     transition:transform .25s cubic-bezier(.4,0,.2,1);}
-
 .sb-logo{padding:20px 16px 16px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:11px;}
 .sb-logo .ico{width:38px;height:38px;background:linear-gradient(135deg,#00897b,#43a047);border-radius:10px;
               display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,137,123,.4);}
 .sb-logo .ico svg{width:22px;height:22px;fill:#fff;}
 .sb-logo .nm{font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;color:#fff;line-height:1.2;}
 .sb-logo small{font-size:10px;color:var(--sbt);letter-spacing:.02em;}
-
-/* Close button inside sidebar — mobile only */
 .sb-close-btn{display:none;position:absolute;top:14px;right:14px;background:rgba(255,255,255,.1);
               border:none;border-radius:8px;width:32px;height:32px;cursor:pointer;
               align-items:center;justify-content:center;color:#fff;font-size:18px;line-height:1;}
-
 .sb-nav{flex:1;padding:10px 10px;}
 .nl{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:rgba(128,203,196,.5);
     padding:14px 10px 5px;font-weight:500;}
-
 .ni{display:flex;align-items:center;gap:9px;padding:8px 12px;border-radius:8px;margin-bottom:1px;
     color:#80cbc4;text-decoration:none;font-size:13px;font-weight:400;transition:all .15s;}
 .ni:hover{background:rgba(0,137,123,.3);color:#e0f2f1;}
 .ni.active{background:var(--sb-active);color:#fff;box-shadow:0 2px 8px rgba(0,137,123,.35);}
 .ni svg{width:16px;height:16px;flex-shrink:0;opacity:.85;}
 .ni.active svg{opacity:1;}
-
 .sb-foot{padding:12px 10px;border-top:1px solid rgba(255,255,255,.07);}
 .ua{width:33px;height:33px;background:linear-gradient(135deg,#00897b,#43a047);border-radius:50%;
     display:flex;align-items:center;justify-content:center;font-weight:600;color:#fff;font-size:12px;flex-shrink:0;}
 
-/* ── OVERLAY (mobile) ── */
+/* ── OVERLAY ── */
 .sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:199;
             backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);}
 .sb-overlay.show{display:block;}
@@ -66,13 +61,21 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);displa
 .pt{font-family:'DM Sans',sans-serif;font-size:18px;font-weight:600;color:var(--txt);
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .tb-right{display:flex;align-items:center;gap:8px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;}
-
-/* Hamburger button */
 .ham-btn{display:none;background:none;border:1.5px solid var(--bdr2);border-radius:8px;
          width:36px;height:36px;cursor:pointer;align-items:center;justify-content:center;
          color:var(--txt);flex-shrink:0;transition:all .15s;}
 .ham-btn:hover{background:var(--pri-l);border-color:var(--pri);}
 .ham-btn svg{width:18px;height:18px;}
+
+/* ── LANGUAGE SWITCHER ── */
+.lang-form{display:flex;align-items:center;gap:0;}
+.lang-btn{padding:5px 11px;font-size:12px;font-weight:600;border:1.5px solid var(--bdr2);
+          background:#fff;color:var(--mut);cursor:pointer;font-family:inherit;
+          transition:all .15s;line-height:1.4;}
+.lang-btn:first-child{border-radius:8px 0 0 8px;border-right:none;}
+.lang-btn:last-child{border-radius:0 8px 8px 0;}
+.lang-btn.active{background:var(--pri);color:#fff;border-color:var(--pri);}
+.lang-btn:hover:not(.active){background:var(--pri-l);border-color:var(--pri);color:var(--pri);}
 
 /* ── BUTTONS ── */
 .btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:8px;
@@ -153,122 +156,66 @@ textarea{resize:vertical;min-height:75px;}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;}
 .tmut{color:var(--mut);}.tsm{font-size:12.5px;}
-
-/* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:#f0f7f5;}
 ::-webkit-scrollbar-thumb{background:#b2dfdb;border-radius:4px;}
 
-/* ════════════════════════════════════════════
-   RESPONSIVE BREAKPOINTS
-   ════════════════════════════════════════════ */
-
-/* ── Tablet (≤ 1024px) ── */
+/* ════ RESPONSIVE ════ */
 @media(max-width:1024px){
   :root{--sw:220px;}
   .sg{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));}
 }
-
-/* ── Small tablet / large phone (≤ 768px) ── */
 @media(max-width:768px){
-  /* Sidebar: hidden off-screen by default */
   .sb{transform:translateX(-100%);}
   .sb.sb-open{transform:translateX(0);}
   .sb-close-btn{display:flex;}
-
-  /* Main content: full width */
   .mc{margin-left:0;}
-
-  /* Topbar */
   .ham-btn{display:flex;}
   .tb{padding:10px 16px;}
   .pt{font-size:15px;}
-
-  /* Page padding */
   .pc{padding:14px;}
-
-  /* Stat cards: 2 columns */
   .sg{grid-template-columns:1fr 1fr;gap:10px;}
-  .sv{font-size:18px;}
-  .sc{padding:13px;}
-
-  /* Grids */
+  .sv{font-size:18px;} .sc{padding:13px;}
   .g2,.g3{grid-template-columns:1fr;}
   .fgrid{grid-template-columns:1fr 1fr;}
-
-  /* Cards */
-  .cb{padding:14px;}
-  .ch{padding:12px 14px;}
-
-  /* Tables: smaller padding */
+  .cb{padding:14px;} .ch{padding:12px 14px;}
   th,td{padding:8px 10px;font-size:12px;}
-
-  /* Topbar actions: allow wrap */
   .tb-right{gap:6px;}
   .tb-right .btn{padding:5px 10px;font-size:12px;}
 }
-
-/* ── Phone (≤ 520px) ── */
 @media(max-width:520px){
-  /* Stat cards: still 2 cols but tighter */
   .sg{grid-template-columns:1fr 1fr;gap:8px;}
   .sc{padding:11px;gap:10px;}
-  .si{width:36px;height:36px;}.si svg{width:17px;height:17px;}
-  .sv{font-size:16px;}
-  .sl{font-size:10.5px;}
-  .sc::before{width:3px;}
-
-  /* Single column forms */
+  .si{width:36px;height:36px;} .si svg{width:17px;height:17px;}
+  .sv{font-size:16px;} .sl{font-size:10.5px;}
   .fgrid{grid-template-columns:1fr;}
-
-  /* Page title shorter */
   .pt{font-size:14px;max-width:160px;}
-
-  /* Reduce table font further */
   th,td{padding:7px 8px;font-size:11.5px;}
-
-  /* Topbar action: hide text on tiny screens, keep icons */
-  .tb-right .btn-text-hide{font-size:0;padding:6px 8px;}
-  .tb-right .btn-text-hide svg{width:16px;height:16px;margin:0;}
-
-  .pc{padding:10px;}
-  .cb{padding:12px;}
+  .pc{padding:10px;} .cb{padding:12px;}
 }
-
-/* ── Very small (≤ 380px) — Redmi 13C etc. ── */
 @media(max-width:380px){
   .sg{grid-template-columns:1fr 1fr;}
-  .pt{font-size:13px;max-width:110px;}
+  .pt{font-size:13px;max-width:100px;}
   .tb{padding:9px 12px;gap:8px;}
-
-  /* Hide button text, show icon only → tiny square buttons */
-  .tb-right .btn span.btn-label{display:none;}
+  .tb-right .btn .btn-label{display:none;}
   .tb-right .btn{padding:7px 9px;font-size:0;}
   .tb-right .btn svg{width:16px;height:16px;margin:0;}
-
-  /* If button has no icon, just shrink it */
-  .tb-right .btn-noicon{font-size:11px;padding:6px 8px;}
-
-  .pc{padding:8px;}
-  .cb{padding:10px;}
-  .ch{padding:10px 12px;}
-  .sv{font-size:15px;}
-  .sl{font-size:10px;}
+  .lang-btn{padding:5px 8px;font-size:11px;}
+  .pc{padding:8px;} .cb{padding:10px;} .ch{padding:10px 12px;}
+  .sv{font-size:15px;} .sl{font-size:10px;}
   .sc{padding:10px;gap:8px;}
-  .si{width:32px;height:32px;border-radius:8px;}
-  .si svg{width:15px;height:15px;}
+  .si{width:32px;height:32px;border-radius:8px;} .si svg{width:15px;height:15px;}
 }
 </style>
 {% block extra_css %}{% endblock %}
 </head>
 <body>
 
-<!-- ══ SIDEBAR OVERLAY (mobile tap-outside to close) ══ -->
 <div class="sb-overlay" id="sbOverlay"></div>
 
 <!-- ══ SIDEBAR ══ -->
 <aside class="sb" id="sidebar">
-  <button class="sb-close-btn" id="sbCloseBtn" aria-label="Close menu">✕</button>
+  <button class="sb-close-btn" id="sbCloseBtn" aria-label="Close">&#10005;</button>
   <div class="sb-logo">
     <div class="ico">
       <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H6v-.57c0-2 4-3.08 6-3.08s6 1.08 6 3.08V18z"/></svg>
@@ -277,66 +224,66 @@ textarea{resize:vertical;min-height:75px;}
   </div>
 
   <nav class="sb-nav">
-    <div class="nl">Overview</div>
+    <div class="nl">{% trans "Overview" %}</div>
     <a href="{% url 'dashboard' %}" class="ni {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>Dashboard
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>{% trans "Dashboard" %}
     </a>
 
     {% if request.user.profile.role != 'patient' %}
-    <div class="nl">Clinical</div>
+    <div class="nl">{% trans "Clinical" %}</div>
     <a href="{% url 'patient_list' %}" class="ni {% if 'patient' in request.resolver_match.url_name %}active{% endif %}">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>Patients
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>{% trans "Patients" %}
     </a>
     <a href="{% url 'appointment_list' %}" class="ni {% if 'appointment' in request.resolver_match.url_name %}active{% endif %}">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2z"/></svg>Appointments
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2z"/></svg>{% trans "Appointments" %}
     </a>
 
-    <div class="nl">Pharmacy</div>
+    <div class="nl">{% trans "Pharmacy" %}</div>
     <a href="{% url 'medicine_list' %}" class="ni {% if request.resolver_match.url_name in 'medicine_list,medicine_create,stock_history' %}active{% endif %}">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.35C18 2.99 16.01 1 13.65 1c-1.3 0-2.48.56-3.33 1.44L9 3.77l-1.32-1.33C6.83 1.56 5.65 1 4.35 1 1.99 1 0 2.99 0 5.35c0 1.3.56 2.48 1.44 3.33L9 16.24l3-3V17h8c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>Medicines
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.35C18 2.99 16.01 1 13.65 1c-1.3 0-2.48.56-3.33 1.44L9 3.77l-1.32-1.33C6.83 1.56 5.65 1 4.35 1 1.99 1 0 2.99 0 5.35c0 1.3.56 2.48 1.44 3.33L9 16.24l3-3V17h8c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>{% trans "Medicines" %}
     </a>
     <a href="{% url 'prescription_list' %}" class="ni {% if 'prescription' in request.resolver_match.url_name %}active{% endif %}">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>Prescriptions
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>{% trans "Prescriptions" %}
     </a>
     <a href="{% url 'stock_history' %}" class="ni {% if request.resolver_match.url_name == 'stock_history' %}active{% endif %}">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>Stock History
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>{% trans "Stock History" %}
     </a>
 
-    <div class="nl">Finance</div>
+    <div class="nl">{% trans "Finance" %}</div>
     <a href="{% url 'finance_dashboard' %}" class="ni {% if request.resolver_match.url_name == 'finance_dashboard' %}active{% endif %}">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>Finance
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>{% trans "Finance" %}
     </a>
     <a href="{% url 'transaction_list' %}" class="ni {% if request.resolver_match.url_name == 'transaction_list' %}active{% endif %}">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>Transactions
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>{% trans "Transactions" %}
     </a>
     <a href="{% url 'bill_list' %}" class="ni {% if 'bill' in request.resolver_match.url_name %}active{% endif %}">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM16 18H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>Bills
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM16 18H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>{% trans "Bills" %}
     </a>
 
     {% if request.user.profile.role == 'admin' %}
-    <div class="nl">Human Resources</div>
+    <div class="nl">{% trans "Human Resources" %}</div>
     <a href="{% url 'staff_list' %}" class="ni {% if 'staff' in request.resolver_match.url_name %}active{% endif %}">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>Staff
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>{% trans "Staff" %}
     </a>
     <a href="{% url 'attendance_today' %}" class="ni {% if request.resolver_match.url_name == 'attendance_today' %}active{% endif %}">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>Attendance
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>{% trans "Attendance" %}
     </a>
     <a href="{% url 'payroll_list' %}" class="ni {% if 'payroll' in request.resolver_match.url_name %}active{% endif %}">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4v2l8 5 8-5V4zm0 4l-8 5-8-5v10h16V8z"/></svg>Payroll
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4v2l8 5 8-5V4zm0 4l-8 5-8-5v10h16V8z"/></svg>{% trans "Payroll" %}
     </a>
-    <div class="nl">Analytics</div>
+    <div class="nl">{% trans "Analytics" %}</div>
     <a href="{% url 'reports_home' %}" class="ni {% if 'report' in request.resolver_match.url_name %}active{% endif %}">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>Reports
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>{% trans "Reports" %}
     </a>
     <a href="{% url 'register' %}" class="ni">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>New User
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>{% trans "New User" %}
     </a>
     {% endif %}
 
     {% else %}
-    <div class="nl">My Health</div>
+    <div class="nl">{% trans "My Health" %}</div>
     <a href="{% url 'patient_portal' %}" class="ni active">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>My Portal
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>{% trans "My Portal" %}
     </a>
     {% endif %}
   </nav>
@@ -350,10 +297,10 @@ textarea{resize:vertical;min-height:75px;}
       </div>
     </div>
     <a href="{% url 'profile' %}" class="ni" style="color:#80cbc4;">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>My Profile
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>{% trans "My Profile" %}
     </a>
     <a href="{% url 'logout' %}" class="ni" style="color:#ef9a9a;">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>Sign Out
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>{% trans "Sign Out" %}
     </a>
   </div>
 </aside>
@@ -362,13 +309,31 @@ textarea{resize:vertical;min-height:75px;}
 <div class="mc">
   <header class="tb">
     <div class="tb-left">
-      <!-- Hamburger (mobile only) -->
       <button class="ham-btn" id="hamBtn" aria-label="Open menu">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
       </button>
       <h1 class="pt">{% block page_title %}{% endblock %}</h1>
     </div>
-    <div class="tb-right">{% block topbar_actions %}{% endblock %}</div>
+    <div class="tb-right">
+      {% block topbar_actions %}{% endblock %}
+
+      <!-- ── Language Switcher ── -->
+      <div class="lang-form">
+        {% get_current_language as CURRENT_LANG %}
+        <form method="post" action="{% url 'set_language' %}" style="display:contents;">
+          {% csrf_token %}
+          <input name="next" type="hidden" value="{{ request.get_full_path }}">
+          <input name="language" type="hidden" value="en">
+          <button type="submit" class="lang-btn {% if CURRENT_LANG == 'en' %}active{% endif %}">EN</button>
+        </form>
+        <form method="post" action="{% url 'set_language' %}" style="display:contents;">
+          {% csrf_token %}
+          <input name="next" type="hidden" value="{{ request.get_full_path }}">
+          <input name="language" type="hidden" value="fr">
+          <button type="submit" class="lang-btn {% if CURRENT_LANG == 'fr' %}active{% endif %}">FR</button>
+        </form>
+      </div>
+    </div>
   </header>
   <main class="pc">
     {% if messages %}<div class="msgs">{% for m in messages %}<div class="alert alert-{{ m.tags|default:'success' }}">{{ m }}</div>{% endfor %}</div>{% endif %}
@@ -378,40 +343,17 @@ textarea{resize:vertical;min-height:75px;}
 
 <script>
 (function(){
-  var ham   = document.getElementById('hamBtn');
-  var sb    = document.getElementById('sidebar');
-  var ov    = document.getElementById('sbOverlay');
-  var close = document.getElementById('sbCloseBtn');
-
-  function openSb(){
-    sb.classList.add('sb-open');
-    ov.classList.add('show');
-    document.body.style.overflow = 'hidden'; // prevent background scroll
-  }
-  function closeSb(){
-    sb.classList.remove('sb-open');
-    ov.classList.remove('show');
-    document.body.style.overflow = '';
-  }
-
-  ham.addEventListener('click', openSb);
-  close.addEventListener('click', closeSb);
-  ov.addEventListener('click', closeSb);
-
-  // Close sidebar on nav link click (mobile UX)
-  sb.querySelectorAll('.ni').forEach(function(link){
-    link.addEventListener('click', function(){
-      if(window.innerWidth <= 768) closeSb();
-    });
-  });
-
-  // Re-open sidebar if resized to desktop while closed
-  window.addEventListener('resize', function(){
-    if(window.innerWidth > 768){
-      ov.classList.remove('show');
-      document.body.style.overflow = '';
-    }
-  });
+  var ham=document.getElementById('hamBtn');
+  var sb=document.getElementById('sidebar');
+  var ov=document.getElementById('sbOverlay');
+  var close=document.getElementById('sbCloseBtn');
+  function openSb(){sb.classList.add('sb-open');ov.classList.add('show');document.body.style.overflow='hidden';}
+  function closeSb(){sb.classList.remove('sb-open');ov.classList.remove('show');document.body.style.overflow='';}
+  ham.addEventListener('click',openSb);
+  close.addEventListener('click',closeSb);
+  ov.addEventListener('click',closeSb);
+  sb.querySelectorAll('.ni').forEach(function(l){l.addEventListener('click',function(){if(window.innerWidth<=768)closeSb();});});
+  window.addEventListener('resize',function(){if(window.innerWidth>768){ov.classList.remove('show');document.body.style.overflow='';}});
 })();
 </script>
 

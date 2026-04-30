@@ -1,0 +1,592 @@
+# French translations for CLINICAPP
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+# ── Sidebar sections ──
+msgid "Overview"
+msgstr "Aperçu"
+
+msgid "Clinical"
+msgstr "Clinique"
+
+msgid "Pharmacy"
+msgstr "Pharmacie"
+
+msgid "Finance"
+msgstr "Finance"
+
+msgid "Human Resources"
+msgstr "Ressources Humaines"
+
+msgid "Analytics"
+msgstr "Analytique"
+
+msgid "My Health"
+msgstr "Ma Santé"
+
+# ── Sidebar nav links ──
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+msgid "Patients"
+msgstr "Patients"
+
+msgid "Appointments"
+msgstr "Rendez-vous"
+
+msgid "Medicines"
+msgstr "Médicaments"
+
+msgid "Prescriptions"
+msgstr "Ordonnances"
+
+msgid "Stock History"
+msgstr "Historique des Stocks"
+
+msgid "Transactions"
+msgstr "Transactions"
+
+msgid "Bills"
+msgstr "Factures"
+
+msgid "Staff"
+msgstr "Personnel"
+
+msgid "Attendance"
+msgstr "Présences"
+
+msgid "Payroll"
+msgstr "Paie"
+
+msgid "Reports"
+msgstr "Rapports"
+
+msgid "New User"
+msgstr "Nouvel Utilisateur"
+
+msgid "My Portal"
+msgstr "Mon Portail"
+
+msgid "My Profile"
+msgstr "Mon Profil"
+
+msgid "Sign Out"
+msgstr "Se Déconnecter"
+
+# ── Topbar buttons ──
+msgid "New Patient"
+msgstr "Nouveau Patient"
+
+msgid "Appointment"
+msgstr "Rendez-vous"
+
+msgid "New Appointment"
+msgstr "Nouveau Rendez-vous"
+
+msgid "New Transaction"
+msgstr "Nouvelle Transaction"
+
+msgid "New Bill"
+msgstr "Nouvelle Facture"
+
+msgid "New Staff"
+msgstr "Nouveau Personnel"
+
+msgid "New Medicine"
+msgstr "Nouveau Médicament"
+
+msgid "New Prescription"
+msgstr "Nouvelle Ordonnance"
+
+# ── Page titles ──
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+msgid "Patient List"
+msgstr "Liste des Patients"
+
+msgid "Schedule Appointment"
+msgstr "Planifier un Rendez-vous"
+
+msgid "Finance Overview"
+msgstr "Vue d'ensemble Financière"
+
+msgid "Medicine Inventory"
+msgstr "Inventaire des Médicaments"
+
+msgid "Staff Directory"
+msgstr "Répertoire du Personnel"
+
+msgid "Reports & Analytics"
+msgstr "Rapports & Analytique"
+
+# ── Dashboard stat labels ──
+msgid "Total Patients"
+msgstr "Total Patients"
+
+msgid "Today's Appointments"
+msgstr "Rendez-vous Aujourd'hui"
+
+msgid "Today's Appts"
+msgstr "RDV Aujourd'hui"
+
+msgid "Low Stock"
+msgstr "Stock Faible"
+
+msgid "Low Stock Medicines"
+msgstr "Médicaments en Stock Faible"
+
+msgid "Income Today (XAF)"
+msgstr "Revenus Aujourd'hui (XAF)"
+
+msgid "Income (XAF)"
+msgstr "Revenus (XAF)"
+
+msgid "Expenses Today (XAF)"
+msgstr "Dépenses Aujourd'hui (XAF)"
+
+msgid "Expenses (XAF)"
+msgstr "Dépenses (XAF)"
+
+msgid "Net Cash Today (XAF)"
+msgstr "Trésorerie Nette Aujourd'hui (XAF)"
+
+msgid "Net Cash (XAF)"
+msgstr "Trésorerie Nette (XAF)"
+
+msgid "7-Day Cash Flow Overview"
+msgstr "Aperçu des Flux de Trésorerie sur 7 Jours"
+
+msgid "Finance Details"
+msgstr "Détails Financiers"
+
+msgid "Today's Appointments"
+msgstr "Rendez-vous du Jour"
+
+msgid "View All"
+msgstr "Voir Tout"
+
+msgid "Low Stock Alert"
+msgstr "Alerte Stock Faible"
+
+msgid "All stock levels are adequate"
+msgstr "Tous les niveaux de stock sont adéquats"
+
+msgid "No appointments scheduled today."
+msgstr "Aucun rendez-vous prévu aujourd'hui."
+
+# ── Common buttons ──
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Edit"
+msgstr "Modifier"
+
+msgid "Delete"
+msgstr "Supprimer"
+
+msgid "View"
+msgstr "Voir"
+
+msgid "Search"
+msgstr "Rechercher"
+
+msgid "Filter"
+msgstr "Filtrer"
+
+msgid "Today"
+msgstr "Aujourd'hui"
+
+msgid "Back"
+msgstr "Retour"
+
+msgid "Update"
+msgstr "Mettre à jour"
+
+msgid "Generate"
+msgstr "Générer"
+
+msgid "Dispense"
+msgstr "Délivrer"
+
+# ── Patient module ──
+msgid "Register New Patient"
+msgstr "Enregistrer un Nouveau Patient"
+
+msgid "Patient Information"
+msgstr "Informations Patient"
+
+msgid "Full Name"
+msgstr "Nom Complet"
+
+msgid "Age"
+msgstr "Âge"
+
+msgid "Date of Birth"
+msgstr "Date de Naissance"
+
+msgid "Gender"
+msgstr "Sexe"
+
+msgid "Blood Group"
+msgstr "Groupe Sanguin"
+
+msgid "Phone"
+msgstr "Téléphone"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Address"
+msgstr "Adresse"
+
+msgid "Registered"
+msgstr "Enregistré"
+
+msgid "Known Allergies"
+msgstr "Allergies Connues"
+
+msgid "Chronic Conditions"
+msgstr "Maladies Chroniques"
+
+msgid "Notes"
+msgstr "Notes"
+
+msgid "Medical Records"
+msgstr "Dossiers Médicaux"
+
+msgid "Recent Appointments"
+msgstr "Rendez-vous Récents"
+
+msgid "No appointments yet."
+msgstr "Aucun rendez-vous pour l'instant."
+
+msgid "No prescriptions."
+msgstr "Aucune ordonnance."
+
+msgid "No bills yet."
+msgstr "Aucune facture pour l'instant."
+
+msgid "No records yet."
+msgstr "Aucun dossier pour l'instant."
+
+# ── Appointment module ──
+msgid "Appointment Details"
+msgstr "Détails du Rendez-vous"
+
+msgid "Patient"
+msgstr "Patient"
+
+msgid "Doctor"
+msgstr "Médecin"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Time"
+msgstr "Heure"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Status"
+msgstr "Statut"
+
+msgid "Reason"
+msgstr "Motif"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "All Statuses"
+msgstr "Tous les Statuts"
+
+msgid "Scheduled"
+msgstr "Planifié"
+
+msgid "Confirmed"
+msgstr "Confirmé"
+
+msgid "In Progress"
+msgstr "En Cours"
+
+msgid "Completed"
+msgstr "Terminé"
+
+msgid "Cancelled"
+msgstr "Annulé"
+
+msgid "No Show"
+msgstr "Absent"
+
+msgid "Consultation"
+msgstr "Consultation"
+
+msgid "Follow-up"
+msgstr "Suivi"
+
+msgid "Emergency"
+msgstr "Urgence"
+
+msgid "Lab Test"
+msgstr "Analyse de Laboratoire"
+
+msgid "Vaccination"
+msgstr "Vaccination"
+
+msgid "Procedure"
+msgstr "Procédure"
+
+# ── Pharmacy module ──
+msgid "Medicine Information"
+msgstr "Informations Médicament"
+
+msgid "Medicine Name"
+msgstr "Nom du Médicament"
+
+msgid "Generic Name"
+msgstr "Nom Générique"
+
+msgid "Category"
+msgstr "Catégorie"
+
+msgid "Unit"
+msgstr "Unité"
+
+msgid "Stock"
+msgstr "Stock"
+
+msgid "Min Stock"
+msgstr "Stock Minimum"
+
+msgid "Sell Price"
+msgstr "Prix de Vente"
+
+msgid "Expiry"
+msgstr "Expiration"
+
+msgid "Expired"
+msgstr "Expiré"
+
+msgid "Low Stock"
+msgstr "Stock Faible"
+
+msgid "Stock History"
+msgstr "Historique des Stocks"
+
+msgid "Prescription Details"
+msgstr "Détails de l'Ordonnance"
+
+msgid "Dispensed"
+msgstr "Délivré"
+
+msgid "Pending"
+msgstr "En Attente"
+
+# ── Finance module ──
+msgid "Bill Summary"
+msgstr "Résumé de la Facture"
+
+msgid "Total Amount"
+msgstr "Montant Total"
+
+msgid "Paid Amount"
+msgstr "Montant Payé"
+
+msgid "Balance Due"
+msgstr "Solde Dû"
+
+msgid "Record Payment"
+msgstr "Enregistrer le Paiement"
+
+msgid "Payment Method"
+msgstr "Mode de Paiement"
+
+msgid "Cash"
+msgstr "Espèces"
+
+msgid "Mobile Money"
+msgstr "Mobile Money"
+
+msgid "Card"
+msgstr "Carte"
+
+msgid "Insurance"
+msgstr "Assurance"
+
+msgid "Income"
+msgstr "Revenu"
+
+msgid "Expense"
+msgstr "Dépense"
+
+msgid "Pending Bills"
+msgstr "Factures en Attente"
+
+msgid "No pending bills"
+msgstr "Aucune facture en attente"
+
+# ── Staff / HR module ──
+msgid "Staff Information"
+msgstr "Informations du Personnel"
+
+msgid "Department"
+msgstr "Département"
+
+msgid "Employment"
+msgstr "Emploi"
+
+msgid "Hire Date"
+msgstr "Date d'Embauche"
+
+msgid "Salary"
+msgstr "Salaire"
+
+msgid "Qualifications"
+msgstr "Qualifications"
+
+msgid "Mark Attendance for Today"
+msgstr "Marquer les Présences du Jour"
+
+msgid "Check In"
+msgstr "Arrivée"
+
+msgid "Check Out"
+msgstr "Départ"
+
+msgid "Present"
+msgstr "Présent"
+
+msgid "Absent"
+msgstr "Absent"
+
+msgid "Leave"
+msgstr "Congé"
+
+msgid "Half Day"
+msgstr "Demi-journée"
+
+msgid "Base Salary"
+msgstr "Salaire de Base"
+
+msgid "Bonus"
+msgstr "Prime"
+
+msgid "Deductions"
+msgstr "Retenues"
+
+msgid "Net Pay"
+msgstr "Salaire Net"
+
+msgid "Mark Paid"
+msgstr "Marquer Payé"
+
+msgid "Paid"
+msgstr "Payé"
+
+# ── Reports ──
+msgid "Financial Report"
+msgstr "Rapport Financier"
+
+msgid "Pharmacy Report"
+msgstr "Rapport Pharmacie"
+
+msgid "Patient Statistics"
+msgstr "Statistiques Patients"
+
+msgid "Total Income (XAF)"
+msgstr "Total Revenus (XAF)"
+
+msgid "Total Expenses (XAF)"
+msgstr "Total Dépenses (XAF)"
+
+msgid "Net Profit (XAF)"
+msgstr "Bénéfice Net (XAF)"
+
+msgid "By Gender"
+msgstr "Par Sexe"
+
+msgid "By Blood Group"
+msgstr "Par Groupe Sanguin"
+
+msgid "New This Month"
+msgstr "Nouveaux ce Mois"
+
+# ── Auth ──
+msgid "Welcome back"
+msgstr "Bon retour"
+
+msgid "Sign in to your MediCare account"
+msgstr "Connectez-vous à votre compte MediCare"
+
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+msgid "Password"
+msgstr "Mot de passe"
+
+msgid "Sign In"
+msgstr "Se Connecter"
+
+msgid "Secure Access"
+msgstr "Accès Sécurisé"
+
+msgid "Edit Profile"
+msgstr "Modifier le Profil"
+
+msgid "Save Changes"
+msgstr "Enregistrer les Modifications"
+
+msgid "First Name"
+msgstr "Prénom"
+
+msgid "Last Name"
+msgstr "Nom"
+
+# ── Patient portal ──
+msgid "My Health Portal"
+msgstr "Mon Portail Santé"
+
+msgid "My Information"
+msgstr "Mes Informations"
+
+msgid "My Appointments"
+msgstr "Mes Rendez-vous"
+
+msgid "My Prescriptions"
+msgstr "Mes Ordonnances"
+
+# ── Role names ──
+msgid "Administrator"
+msgstr "Administrateur"
+
+msgid "Doctor"
+msgstr "Médecin"
+
+msgid "Nurse"
+msgstr "Infirmière"
+
+msgid "Cashier"
+msgstr "Caissier"
+
+msgid "Receptionist"
+msgstr "Réceptionniste"
+
+msgid "Patient"
+msgstr "Patient"
+
+# ── Language toggle ──
+msgid "Language"
+msgstr "Langue"
+
+msgid "English"
+msgstr "Anglais"
+
+msgid "French"
+msgstr "Français"

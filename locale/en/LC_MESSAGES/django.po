@@ -1,0 +1,90 @@
+# English translations for CLINICAPP (base language)
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "Overview"
+msgstr "Overview"
+
+msgid "Clinical"
+msgstr "Clinical"
+
+msgid "Pharmacy"
+msgstr "Pharmacy"
+
+msgid "Finance"
+msgstr "Finance"
+
+msgid "Human Resources"
+msgstr "Human Resources"
+
+msgid "Analytics"
+msgstr "Analytics"
+
+msgid "My Health"
+msgstr "My Health"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Patients"
+msgstr "Patients"
+
+msgid "Appointments"
+msgstr "Appointments"
+
+msgid "Medicines"
+msgstr "Medicines"
+
+msgid "Prescriptions"
+msgstr "Prescriptions"
+
+msgid "Stock History"
+msgstr "Stock History"
+
+msgid "Transactions"
+msgstr "Transactions"
+
+msgid "Bills"
+msgstr "Bills"
+
+msgid "Staff"
+msgstr "Staff"
+
+msgid "Attendance"
+msgstr "Attendance"
+
+msgid "Payroll"
+msgstr "Payroll"
+
+msgid "Reports"
+msgstr "Reports"
+
+msgid "New User"
+msgstr "New User"
+
+msgid "My Portal"
+msgstr "My Portal"
+
+msgid "My Profile"
+msgstr "My Profile"
+
+msgid "Sign Out"
+msgstr "Sign Out"
+
+msgid "New Patient"
+msgstr "New Patient"
+
+msgid "Appointment"
+msgstr "Appointment"
+
+msgid "Language"
+msgstr "Language"
+
+msgid "English"
+msgstr "English"
+
+msgid "French"
+msgstr "French"

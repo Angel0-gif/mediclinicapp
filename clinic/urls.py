@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('i18n/', include('django.conf.urls.i18n')),   # ← gives us /i18n/set_language/
     path('', include('apps.core.urls')),
     path('auth/', include('apps.core.auth_urls')),
     path('patients/', include('apps.patients.urls')),
