@@ -1,32 +1,58 @@
-{% extends "base.html" %}{% block title %}Patients{% endblock %}{% block page_title %}Patients{% endblock %}
-{% block topbar_actions %}<a href="{% url 'patient_create' %}" class="btn btn-pri">+ New Patient</a>{% endblock %}
+{% extends "base.html" %}{% block title %}Appointments{% endblock %}{% block page_title %}Appointments{% endblock %}
+{% block topbar_actions %}<a href="{% url 'appointment_create' %}" class="btn btn-pri">+ New Appointment</a>{% endblock %}
+
+{% block extra_css %}<style>
+.filter-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.filter-bar input[type=date],
+.filter-bar select{width:auto;flex:1;min-width:130px;}
+@media(max-width:520px){
+  .filter-bar input[type=date],
+  .filter-bar select{min-width:100%;flex:none;}
+  /* Hide less-important columns on small screens */
+  .col-reason{display:none;}
+  /* Make status update inline forms stack nicely */
+  .status-form{flex-direction:column;align-items:flex-start;gap:4px;}
+  .status-form select{width:100%;}
+}
+</style>{% endblock %}
+
 {% block content %}
-<div class="card">
-  <div class="ch">
-    <form method="get" class="flex ic gap2">
-      <input type="text" name="q" value="{{ q }}" placeholder="Search name, phone…" style="width:280px;">
-      <button class="btn btn-pri btn-sm" type="submit">Search</button>
-      {% if q %}<a href="{% url 'patient_list' %}" class="btn btn-out btn-sm">Clear</a>{% endif %}
+<div class="card" style="margin-bottom:18px;">
+  <div class="cb">
+    <form method="get" class="filter-bar">
+      <input type="date" name="date" value="{{ filter_date }}">
+      <select name="status">
+        <option value="">All Statuses</option>
+        {% for v,l in status_choices %}<option value="{{ v }}" {% if status == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+      </select>
+      <button class="btn btn-pri btn-sm" type="submit">Filter</button>
+      <a href="{% url 'appointment_list' %}" class="btn btn-out btn-sm">Today</a>
     </form>
-    <span class="tmut tsm">{{ patients|length }} patient(s)</span>
   </div>
+</div>
+<div class="card">
+  <div class="ch"><span class="ct">Appointments for {{ filter_date }}</span><span class="tmut tsm">{{ appointments|length }} total</span></div>
   <div class="tw"><table>
-    <thead><tr><th>#</th><th>Name</th><th>Age</th><th>Gender</th><th>Blood</th><th>Phone</th><th>Registered</th><th>Actions</th></tr></thead>
+    <thead><tr><th>Time</th><th>Patient</th><th>Type</th><th>Doctor</th><th class="col-reason">Reason</th><th>Status</th><th>Actions</th></tr></thead>
     <tbody>
-    {% for p in patients %}
+    {% for a in appointments %}
     <tr>
-      <td class="tmut">{{ forloop.counter }}</td>
-      <td><a href="{% url 'patient_detail' p.pk %}" style="font-weight:600;color:#0ea5e9;text-decoration:none;">{{ p.full_name }}</a></td>
-      <td>{{ p.age }} yrs</td><td>{{ p.get_gender_display }}</td>
-      <td><span class="badge bg-red">{{ p.blood_group|default:"—" }}</span></td>
-      <td>{{ p.phone }}</td>
-      <td class="tmut">{{ p.registered_at|date:"d M Y" }}</td>
-      <td class="flex gap2">
-        <a href="{% url 'patient_detail' p.pk %}" class="btn btn-out btn-sm">View</a>
-        <a href="{% url 'patient_edit' p.pk %}" class="btn btn-out btn-sm">Edit</a>
+      <td style="font-weight:700;color:#0ea5e9;white-space:nowrap;">{{ a.time|time:"H:i" }}</td>
+      <td><a href="{% url 'patient_detail' a.patient.pk %}" style="font-weight:600;color:#0ea5e9;text-decoration:none;white-space:nowrap;">{{ a.patient.full_name }}</a></td>
+      <td style="white-space:nowrap;">{{ a.get_appointment_type_display }}</td>
+      <td style="white-space:nowrap;">{% if a.doctor %}Dr. {{ a.doctor.last_name }}{% else %}<span class="tmut">—</span>{% endif %}</td>
+      <td class="tmut col-reason">{{ a.reason|truncatechars:50|default:"—" }}</td>
+      <td><span class="badge {% if a.status == 'completed' %}bg-green{% elif a.status == 'cancelled' %}bg-red{% elif a.status == 'in_progress' %}bg-blue{% elif a.status == 'confirmed' %}bg-purple{% else %}bg-yellow{% endif %}">{{ a.get_status_display }}</span></td>
+      <td>
+        <form method="post" action="{% url 'appointment_update_status' a.pk %}" class="flex gap2 ic status-form">{% csrf_token %}
+          <select name="status" style="min-width:110px;padding:4px 8px;font-size:12px;">
+            {% for v,l in status_choices %}<option value="{{ v }}" {% if a.status == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+          </select>
+          <button class="btn btn-pri btn-sm" type="submit">Update</button>
+        </form>
       </td>
     </tr>
-    {% empty %}<tr><td colspan="8" style="text-align:center;padding:32px;color:#94a3b8;">No patients found.</td></tr>{% endfor %}
+    {% empty %}<tr><td colspan="7" style="text-align:center;padding:32px;color:#94a3b8;">No appointments found.</td></tr>{% endfor %}
     </tbody>
   </table></div>
 </div>

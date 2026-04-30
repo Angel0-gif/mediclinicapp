@@ -235,10 +235,28 @@ textarea{resize:vertical;min-height:75px;}
   .cb{padding:12px;}
 }
 
-/* ── Very small (≤ 380px) ── */
+/* ── Very small (≤ 380px) — Redmi 13C etc. ── */
 @media(max-width:380px){
-  .sg{grid-template-columns:1fr;}
-  .pt{max-width:120px;}
+  .sg{grid-template-columns:1fr 1fr;}
+  .pt{font-size:13px;max-width:110px;}
+  .tb{padding:9px 12px;gap:8px;}
+
+  /* Hide button text, show icon only → tiny square buttons */
+  .tb-right .btn span.btn-label{display:none;}
+  .tb-right .btn{padding:7px 9px;font-size:0;}
+  .tb-right .btn svg{width:16px;height:16px;margin:0;}
+
+  /* If button has no icon, just shrink it */
+  .tb-right .btn-noicon{font-size:11px;padding:6px 8px;}
+
+  .pc{padding:8px;}
+  .cb{padding:10px;}
+  .ch{padding:10px 12px;}
+  .sv{font-size:15px;}
+  .sl{font-size:10px;}
+  .sc{padding:10px;gap:8px;}
+  .si{width:32px;height:32px;border-radius:8px;}
+  .si svg{width:15px;height:15px;}
 }
 </style>
 {% block extra_css %}{% endblock %}
