@@ -1,32 +1,51 @@
-{% extends "base.html" %}{% block title %}New Appointment{% endblock %}{% block page_title %}Schedule Appointment{% endblock %}
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% if patient %}{% trans "Edit Patient" %}{% else %}{% trans "New Patient" %}{% endif %}{% endblock %}
+{% block page_title %}{% if patient %}{% trans "Edit" %}: {{ patient.full_name }}{% else %}{% trans "Register New Patient" %}{% endif %}{% endblock %}
 {% block content %}
-<div class="card" style="max-width:780px;">
-  <div class="ch"><span class="ct">Appointment Details</span></div>
+<div class="card">
+  <div class="ch"><span class="ct">{% trans "Patient Information" %}</span></div>
   <div class="cb">
     <form method="post">{% csrf_token %}
       <div class="fgrid">
-        <div class="fg"><label>Patient *</label>
-          <select name="patient" required>
-            <option value="">— Select Patient —</option>
-            {% for p in patients %}<option value="{{ p.pk }}">{{ p.full_name }}</option>{% endfor %}
+        <div class="fg"><label>{% trans "First Name" %} *</label><input type="text" name="first_name" value="{{ patient.first_name }}" required></div>
+        <div class="fg"><label>{% trans "Last Name" %} *</label><input type="text" name="last_name" value="{{ patient.last_name }}" required></div>
+        <div class="fg"><label>{% trans "Date of Birth" %} *</label><input type="date" name="date_of_birth" value="{{ patient.date_of_birth|date:'Y-m-d' }}" required></div>
+        <div class="fg"><label>{% trans "Gender" %} *</label>
+          <select name="gender">
+            <option value="M" {% if patient.gender == 'M' %}selected{% endif %}>{% trans "Male" %}</option>
+            <option value="F" {% if patient.gender == 'F' %}selected{% endif %}>{% trans "Female" %}</option>
+            <option value="O" {% if patient.gender == 'O' %}selected{% endif %}>{% trans "Other" %}</option>
           </select></div>
-        <div class="fg"><label>Doctor</label>
-          <select name="doctor"><option value="">— Unassigned —</option>
-            {% for d in doctors %}<option value="{{ d.pk }}">Dr. {{ d.get_full_name }}</option>{% endfor %}
+        <div class="fg"><label>{% trans "Blood Group" %}</label>
+          <select name="blood_group">
+            <option value="">— {% trans "Select" %} —</option>
+            {% for val in "A+,A-,B+,B-,AB+,AB-,O+,O-"|split:"," %}<option value="{{ val }}" {% if patient.blood_group == val %}selected{% endif %}>{{ val }}</option>{% endfor %}
           </select></div>
-        <div class="fg"><label>Date *</label><input type="date" name="date" value="{{ today }}" required></div>
-        <div class="fg"><label>Time *</label><input type="time" name="time" required></div>
-        <div class="fg"><label>Type *</label>
-          <select name="appointment_type">
-            <option value="consultation">Consultation</option><option value="follow_up">Follow-up</option>
-            <option value="emergency">Emergency</option><option value="lab_test">Lab Test</option>
-            <option value="vaccination">Vaccination</option><option value="procedure">Procedure</option>
-          </select></div>
-        <div class="fg full"><label>Reason</label><textarea name="reason" placeholder="Reason for visit…"></textarea></div>
+        <div class="fg"><label>{% trans "Phone" %} *</label><input type="text" name="phone" value="{{ patient.phone }}" required></div>
+        <div class="fg"><label>{% trans "Email" %}</label><input type="email" name="email" value="{{ patient.email }}"></div>
+        <div class="fg full"><label>{% trans "Address" %}</label><textarea name="address">{{ patient.address }}</textarea></div>
+        <div class="fg"><label>{% trans "Emergency Contact Name" %}</label><input type="text" name="emergency_contact_name" value="{{ patient.emergency_contact_name }}"></div>
+        <div class="fg"><label>{% trans "Emergency Contact Phone" %}</label><input type="text" name="emergency_contact_phone" value="{{ patient.emergency_contact_phone }}"></div>
+        <div class="fg full"><label>{% trans "Known Allergies" %}</label><textarea name="allergies">{{ patient.allergies }}</textarea></div>
+        <div class="fg full"><label>{% trans "Chronic Conditions" %}</label><textarea name="chronic_conditions">{{ patient.chronic_conditions }}</textarea></div>
+        <div class="fg full"><label>{% trans "Notes" %}</label><textarea name="notes">{{ patient.notes }}</textarea></div>
       </div>
+      {% if not patient %}
+      <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:16px;margin-top:16px;">
+        <div class="flex ic gap2" style="margin-bottom:12px;">
+          <input type="checkbox" id="ca" name="create_account" style="width:auto;">
+          <label for="ca" style="margin:0;">{% trans "Create patient login account" %}</label>
+        </div>
+        <div id="acc_fields" style="display:none;" class="fgrid">
+          <div class="fg"><label>{% trans "Username" %}</label><input type="text" name="username"></div>
+          <div class="fg"><label>{% trans "Password" %}</label><input type="password" name="password"></div>
+        </div>
+      </div>
+      <script>document.getElementById('ca').onchange=function(){document.getElementById('acc_fields').style.display=this.checked?'grid':'none';}</script>
+      {% endif %}
       <div class="mt4 flex gap2">
-        <button type="submit" class="btn btn-pri">Schedule</button>
-        <a href="{% url 'appointment_list' %}" class="btn btn-out">Cancel</a>
+        <button type="submit" class="btn btn-pri">{% if patient %}{% trans "Save Changes" %}{% else %}{% trans "Register Patient" %}{% endif %}</button>
+        <a href="{% url 'patient_list' %}" class="btn btn-out">{% trans "Cancel" %}</a>
       </div>
     </form>
   </div>

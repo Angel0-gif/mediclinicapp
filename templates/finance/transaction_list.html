@@ -1,42 +1,39 @@
-{% extends "base.html" %}{% block title %}Transactions{% endblock %}{% block page_title %}Transactions{% endblock %}
-{% block topbar_actions %}<a href="{% url 'transaction_create' %}" class="btn btn-pri">+ New Transaction</a>{% endblock %}
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% trans "Transactions" %}{% endblock %}{% block page_title %}{% trans "Transactions" %}{% endblock %}
+{% block topbar_actions %}<a href="{% url 'transaction_create' %}" class="btn btn-pri">+ {% trans "New Transaction" %}</a>{% endblock %}
 {% block content %}
-<div class="card" style="margin-bottom:16px;">
-  <div class="cb">
-    <form method="get" class="flex ic gap2" style="flex-wrap:wrap;">
-      <input type="date" name="start" value="{{ start }}" style="width:160px;">
-      <span class="tmut">to</span>
-      <input type="date" name="end" value="{{ end }}" style="width:160px;">
-      <select name="type" style="width:140px;"><option value="">All Types</option>
-        <option value="income" {% if ttype == 'income' %}selected{% endif %}>Income</option>
-        <option value="expense" {% if ttype == 'expense' %}selected{% endif %}>Expense</option>
-      </select>
-      <button class="btn btn-pri btn-sm" type="submit">Filter</button>
-    </form>
-  </div>
-</div>
+<div class="card" style="margin-bottom:16px;"><div class="cb">
+  <form method="get" class="flex ic gap2" style="flex-wrap:wrap;">
+    <input type="date" name="start" value="{{ start }}" style="width:160px;">
+    <span class="tmut">{% trans "to" %}</span>
+    <input type="date" name="end" value="{{ end }}" style="width:160px;">
+    <select name="type" style="width:140px;"><option value="">{% trans "All Types" %}</option>
+      <option value="income" {% if ttype == 'income' %}selected{% endif %}>{% trans "Income" %}</option>
+      <option value="expense" {% if ttype == 'expense' %}selected{% endif %}>{% trans "Expense" %}</option>
+    </select>
+    <button class="btn btn-pri btn-sm" type="submit">{% trans "Filter" %}</button>
+  </form>
+</div></div>
 <div class="sg" style="margin-bottom:18px;">
-  <div class="sc"><div class="si green"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10z"/></svg></div><div><div class="sv">{{ total_in|floatformat:0 }}</div><div class="sl">Total Income (XAF)</div></div></div>
-  <div class="sc"><div class="si red"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 3v10h8V3h-8z"/></svg></div><div><div class="sv">{{ total_out|floatformat:0 }}</div><div class="sl">Total Expenses (XAF)</div></div></div>
-  <div class="sc"><div class="si {% if net >= 0 %}purple{% else %}red{% endif %}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 21h18V3z"/></svg></div><div><div class="sv">{{ net|floatformat:0 }}</div><div class="sl">Net (XAF)</div></div></div>
+  <div class="sc"><div class="si green"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10z"/></svg></div><div><div class="sv">{{ total_in|floatformat:0 }}</div><div class="sl">{% trans "Total Income (XAF)" %}</div></div></div>
+  <div class="sc"><div class="si red"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 3v10h8V3h-8z"/></svg></div><div><div class="sv">{{ total_out|floatformat:0 }}</div><div class="sl">{% trans "Total Expenses (XAF)" %}</div></div></div>
+  <div class="sc"><div class="si {% if net >= 0 %}purple{% else %}red{% endif %}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 21h18V3z"/></svg></div><div><div class="sv">{{ net|floatformat:0 }}</div><div class="sl">{% trans "Net (XAF)" %}</div></div></div>
 </div>
-<div class="card">
-  <div class="tw"><table>
-    <thead><tr><th>Date</th><th>Type</th><th>Category</th><th>Patient</th><th>Description</th><th>Amount</th><th>Method</th><th>By</th></tr></thead>
-    <tbody>
-    {% for t in txns %}
-    <tr>
-      <td class="tmut tsm">{{ t.date|date:"d M Y" }}</td>
-      <td><span class="badge {% if t.transaction_type == 'income' %}bg-green{% else %}bg-red{% endif %}">{{ t.transaction_type|title }}</span></td>
-      <td class="tmut">{{ t.category.name|default:"—" }}</td>
-      <td>{% if t.patient %}<a href="{% url 'patient_detail' t.patient.pk %}" style="color:#0ea5e9;">{{ t.patient.full_name }}</a>{% else %}—{% endif %}</td>
-      <td class="tmut">{{ t.description|truncatechars:60|default:"—" }}</td>
-      <td style="font-weight:700;">{{ t.amount|floatformat:0 }} XAF</td>
-      <td class="tmut tsm">{{ t.get_payment_method_display }}</td>
-      <td class="tmut tsm">{{ t.recorded_by.get_full_name|default:"—" }}</td>
-    </tr>
-    {% empty %}<tr><td colspan="8" style="text-align:center;padding:32px;color:#94a3b8;">No transactions.</td></tr>{% endfor %}
-    </tbody>
-  </table></div>
-</div>
+<div class="card"><div class="tw"><table>
+  <thead><tr><th>{% trans "Date" %}</th><th>{% trans "Type" %}</th><th>{% trans "Category" %}</th><th>{% trans "Patient" %}</th><th>{% trans "Description" %}</th><th>{% trans "Amount" %}</th><th>{% trans "Method" %}</th><th>{% trans "By" %}</th></tr></thead>
+  <tbody>
+  {% for t in txns %}
+  <tr>
+    <td class="tmut tsm">{{ t.date|date:"d M Y" }}</td>
+    <td><span class="badge {% if t.transaction_type == 'income' %}bg-green{% else %}bg-red{% endif %}">{{ t.transaction_type|title }}</span></td>
+    <td class="tmut">{{ t.category.name|default:"—" }}</td>
+    <td>{% if t.patient %}<a href="{% url 'patient_detail' t.patient.pk %}" style="color:#0ea5e9;">{{ t.patient.full_name }}</a>{% else %}—{% endif %}</td>
+    <td class="tmut">{{ t.description|truncatechars:60|default:"—" }}</td>
+    <td style="font-weight:700;">{{ t.amount|floatformat:0 }} XAF</td>
+    <td class="tmut tsm">{{ t.get_payment_method_display }}</td>
+    <td class="tmut tsm">{{ t.recorded_by.get_full_name|default:"—" }}</td>
+  </tr>
+  {% empty %}<tr><td colspan="8" style="text-align:center;padding:32px;color:#94a3b8;">{% trans "No transactions." %}</td></tr>{% endfor %}
+  </tbody>
+</table></div></div>
 {% endblock %}

@@ -1,38 +1,40 @@
-{% extends "base.html" %}{% block title %}New Transaction{% endblock %}{% block page_title %}Record Transaction{% endblock %}
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% trans "New Transaction" %}{% endblock %}{% block page_title %}{% trans "Record Transaction" %}{% endblock %}
 {% block content %}
 <div class="card" style="max-width:680px;">
-  <div class="ch"><span class="ct">Transaction Details</span></div>
-  <div class="cb">
-    <form method="post">{% csrf_token %}
-      <div class="fgrid">
-        <div class="fg"><label>Type *</label>
-          <select name="transaction_type" required>
-            <option value="income">Income</option>
-            <option value="expense">Expense</option>
-          </select></div>
-        <div class="fg"><label>Category</label>
-          <select name="category"><option value="">— None —</option>
-            {% for c in categories %}<option value="{{ c.pk }}">{{ c.name }} ({{ c.transaction_type }})</option>{% endfor %}
-          </select></div>
-        <div class="fg"><label>Amount (XAF) *</label><input type="number" name="amount" step="0.01" required></div>
-        <div class="fg"><label>Payment Method *</label>
-          <select name="payment_method">
-            <option value="cash">Cash</option><option value="mobile">Mobile Money</option>
-            <option value="card">Card</option><option value="insurance">Insurance</option><option value="other">Other</option>
-          </select></div>
-        <div class="fg"><label>Date *</label><input type="date" name="date" value="{{ today }}" required></div>
-        <div class="fg"><label>Patient (optional)</label>
-          <select name="patient"><option value="">— None —</option>
-            {% for p in patients %}<option value="{{ p.pk }}">{{ p.full_name }}</option>{% endfor %}
-          </select></div>
-        <div class="fg full"><label>Description</label><textarea name="description" placeholder="Details…"></textarea></div>
-        <div class="fg"><label>Reference</label><input type="text" name="reference" placeholder="Invoice or receipt number"></div>
-      </div>
-      <div class="mt4 flex gap2">
-        <button type="submit" class="btn btn-pri">Record Transaction</button>
-        <a href="{% url 'transaction_list' %}" class="btn btn-out">Cancel</a>
-      </div>
-    </form>
-  </div>
+  <div class="ch"><span class="ct">{% trans "Transaction Details" %}</span></div>
+  <div class="cb"><form method="post">{% csrf_token %}
+    <div class="fgrid">
+      <div class="fg"><label>{% trans "Type" %} *</label>
+        <select name="transaction_type" required>
+          <option value="income">{% trans "Income" %}</option>
+          <option value="expense">{% trans "Expense" %}</option>
+        </select></div>
+      <div class="fg"><label>{% trans "Category" %}</label>
+        <select name="category"><option value="">— {% trans "None" %} —</option>
+          {% for c in categories %}<option value="{{ c.pk }}">{{ c.name }} ({{ c.transaction_type }})</option>{% endfor %}
+        </select></div>
+      <div class="fg"><label>{% trans "Amount" %} (XAF) *</label><input type="number" name="amount" step="0.01" required></div>
+      <div class="fg"><label>{% trans "Payment Method" %} *</label>
+        <select name="payment_method">
+          <option value="cash">{% trans "Cash" %}</option>
+          <option value="mobile">{% trans "Mobile Money" %}</option>
+          <option value="card">{% trans "Card" %}</option>
+          <option value="insurance">{% trans "Insurance" %}</option>
+          <option value="other">{% trans "Other" %}</option>
+        </select></div>
+      <div class="fg"><label>{% trans "Date" %} *</label><input type="date" name="date" value="{{ today }}" required></div>
+      <div class="fg"><label>{% trans "Patient" %} ({% trans "optional" %})</label>
+        <select name="patient"><option value="">— {% trans "None" %} —</option>
+          {% for p in patients %}<option value="{{ p.pk }}">{{ p.full_name }}</option>{% endfor %}
+        </select></div>
+      <div class="fg full"><label>{% trans "Description" %}</label><textarea name="description" placeholder="{% trans 'Details…' %}"></textarea></div>
+      <div class="fg"><label>{% trans "Reference" %}</label><input type="text" name="reference" placeholder="{% trans 'Invoice or receipt number' %}"></div>
+    </div>
+    <div class="mt4 flex gap2">
+      <button type="submit" class="btn btn-pri">{% trans "Record Transaction" %}</button>
+      <a href="{% url 'transaction_list' %}" class="btn btn-out">{% trans "Cancel" %}</a>
+    </div>
+  </form></div>
 </div>
 {% endblock %}

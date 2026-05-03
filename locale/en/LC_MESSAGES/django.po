@@ -1,4 +1,4 @@
-# English translations for CLINICAPP (base language)
+# English translations for CLINICAPP
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -80,6 +80,468 @@ msgstr "New Patient"
 msgid "Appointment"
 msgstr "Appointment"
 
+msgid "New Appointment"
+msgstr "New Appointment"
+
+msgid "New Transaction"
+msgstr "New Transaction"
+
+msgid "New Bill"
+msgstr "New Bill"
+
+msgid "New Staff"
+msgstr "New Staff"
+
+msgid "New Medicine"
+msgstr "New Medicine"
+
+msgid "New Prescription"
+msgstr "New Prescription"
+
+msgid "Finance Overview"
+msgstr "Finance Overview"
+
+msgid "Medicine Inventory"
+msgstr "Medicine Inventory"
+
+msgid "Staff Directory"
+msgstr "Staff Directory"
+
+msgid "Reports & Analytics"
+msgstr "Reports & Analytics"
+
+msgid "Total Patients"
+msgstr "Total Patients"
+
+msgid "Today's Appointments"
+msgstr "Today's Appointments"
+
+msgid "Today's Appts"
+msgstr "Today's Appts"
+
+msgid "Low Stock"
+msgstr "Low Stock"
+
+msgid "Low Stock Medicines"
+msgstr "Low Stock Medicines"
+
+msgid "Income Today (XAF)"
+msgstr "Income Today (XAF)"
+
+msgid "Income (XAF)"
+msgstr "Income (XAF)"
+
+msgid "Expenses Today (XAF)"
+msgstr "Expenses Today (XAF)"
+
+msgid "Expenses (XAF)"
+msgstr "Expenses (XAF)"
+
+msgid "Net Cash Today (XAF)"
+msgstr "Net Cash Today (XAF)"
+
+msgid "Net Cash (XAF)"
+msgstr "Net Cash (XAF)"
+
+msgid "7-Day Cash Flow Overview"
+msgstr "7-Day Cash Flow Overview"
+
+msgid "Finance Details"
+msgstr "Finance Details"
+
+msgid "View All"
+msgstr "View All"
+
+msgid "Low Stock Alert"
+msgstr "Low Stock Alert"
+
+msgid "All stock levels are adequate"
+msgstr "All stock levels are adequate"
+
+msgid "No appointments scheduled today."
+msgstr "No appointments scheduled today."
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "View"
+msgstr "View"
+
+msgid "Search"
+msgstr "Search"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Today"
+msgstr "Today"
+
+msgid "Back"
+msgstr "Back"
+
+msgid "Update"
+msgstr "Update"
+
+msgid "Generate"
+msgstr "Generate"
+
+msgid "Dispense"
+msgstr "Dispense"
+
+msgid "Register New Patient"
+msgstr "Register New Patient"
+
+msgid "Patient Information"
+msgstr "Patient Information"
+
+msgid "Full Name"
+msgstr "Full Name"
+
+msgid "Age"
+msgstr "Age"
+
+msgid "Date of Birth"
+msgstr "Date of Birth"
+
+msgid "Gender"
+msgstr "Gender"
+
+msgid "Blood Group"
+msgstr "Blood Group"
+
+msgid "Phone"
+msgstr "Phone"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Address"
+msgstr "Address"
+
+msgid "Registered"
+msgstr "Registered"
+
+msgid "Known Allergies"
+msgstr "Known Allergies"
+
+msgid "Chronic Conditions"
+msgstr "Chronic Conditions"
+
+msgid "Notes"
+msgstr "Notes"
+
+msgid "Medical Records"
+msgstr "Medical Records"
+
+msgid "Recent Appointments"
+msgstr "Recent Appointments"
+
+msgid "No appointments yet."
+msgstr "No appointments yet."
+
+msgid "No prescriptions."
+msgstr "No prescriptions."
+
+msgid "No bills yet."
+msgstr "No bills yet."
+
+msgid "No records yet."
+msgstr "No records yet."
+
+msgid "Appointment Details"
+msgstr "Appointment Details"
+
+msgid "Patient"
+msgstr "Patient"
+
+msgid "Doctor"
+msgstr "Doctor"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Time"
+msgstr "Time"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Reason"
+msgstr "Reason"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "All Statuses"
+msgstr "All Statuses"
+
+msgid "Scheduled"
+msgstr "Scheduled"
+
+msgid "Confirmed"
+msgstr "Confirmed"
+
+msgid "In Progress"
+msgstr "In Progress"
+
+msgid "Completed"
+msgstr "Completed"
+
+msgid "Cancelled"
+msgstr "Cancelled"
+
+msgid "No Show"
+msgstr "No Show"
+
+msgid "Consultation"
+msgstr "Consultation"
+
+msgid "Follow-up"
+msgstr "Follow-up"
+
+msgid "Emergency"
+msgstr "Emergency"
+
+msgid "Lab Test"
+msgstr "Lab Test"
+
+msgid "Vaccination"
+msgstr "Vaccination"
+
+msgid "Procedure"
+msgstr "Procedure"
+
+msgid "Medicine Information"
+msgstr "Medicine Information"
+
+msgid "Medicine Name"
+msgstr "Medicine Name"
+
+msgid "Generic Name"
+msgstr "Generic Name"
+
+msgid "Category"
+msgstr "Category"
+
+msgid "Unit"
+msgstr "Unit"
+
+msgid "Stock"
+msgstr "Stock"
+
+msgid "Min Stock"
+msgstr "Min Stock"
+
+msgid "Sell Price"
+msgstr "Sell Price"
+
+msgid "Expiry"
+msgstr "Expiry"
+
+msgid "Expired"
+msgstr "Expired"
+
+msgid "Prescription Details"
+msgstr "Prescription Details"
+
+msgid "Dispensed"
+msgstr "Dispensed"
+
+msgid "Pending"
+msgstr "Pending"
+
+msgid "Bill Summary"
+msgstr "Bill Summary"
+
+msgid "Total Amount"
+msgstr "Total Amount"
+
+msgid "Paid Amount"
+msgstr "Paid Amount"
+
+msgid "Balance Due"
+msgstr "Balance Due"
+
+msgid "Record Payment"
+msgstr "Record Payment"
+
+msgid "Payment Method"
+msgstr "Payment Method"
+
+msgid "Cash"
+msgstr "Cash"
+
+msgid "Mobile Money"
+msgstr "Mobile Money"
+
+msgid "Card"
+msgstr "Card"
+
+msgid "Insurance"
+msgstr "Insurance"
+
+msgid "Income"
+msgstr "Income"
+
+msgid "Expense"
+msgstr "Expense"
+
+msgid "Pending Bills"
+msgstr "Pending Bills"
+
+msgid "No pending bills"
+msgstr "No pending bills"
+
+msgid "Staff Information"
+msgstr "Staff Information"
+
+msgid "Department"
+msgstr "Department"
+
+msgid "Employment"
+msgstr "Employment"
+
+msgid "Hire Date"
+msgstr "Hire Date"
+
+msgid "Salary"
+msgstr "Salary"
+
+msgid "Qualifications"
+msgstr "Qualifications"
+
+msgid "Mark Attendance for Today"
+msgstr "Mark Attendance for Today"
+
+msgid "Check In"
+msgstr "Check In"
+
+msgid "Check Out"
+msgstr "Check Out"
+
+msgid "Present"
+msgstr "Present"
+
+msgid "Absent"
+msgstr "Absent"
+
+msgid "Leave"
+msgstr "Leave"
+
+msgid "Half Day"
+msgstr "Half Day"
+
+msgid "Base Salary"
+msgstr "Base Salary"
+
+msgid "Bonus"
+msgstr "Bonus"
+
+msgid "Deductions"
+msgstr "Deductions"
+
+msgid "Net Pay"
+msgstr "Net Pay"
+
+msgid "Mark Paid"
+msgstr "Mark Paid"
+
+msgid "Paid"
+msgstr "Paid"
+
+msgid "Financial Report"
+msgstr "Financial Report"
+
+msgid "Pharmacy Report"
+msgstr "Pharmacy Report"
+
+msgid "Patient Statistics"
+msgstr "Patient Statistics"
+
+msgid "Total Income (XAF)"
+msgstr "Total Income (XAF)"
+
+msgid "Total Expenses (XAF)"
+msgstr "Total Expenses (XAF)"
+
+msgid "Net Profit (XAF)"
+msgstr "Net Profit (XAF)"
+
+msgid "By Gender"
+msgstr "By Gender"
+
+msgid "By Blood Group"
+msgstr "By Blood Group"
+
+msgid "New This Month"
+msgstr "New This Month"
+
+msgid "Welcome back"
+msgstr "Welcome back"
+
+msgid "Sign in to your MediCare account"
+msgstr "Sign in to your MediCare account"
+
+msgid "Username"
+msgstr "Username"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Sign In"
+msgstr "Sign In"
+
+msgid "Secure Access"
+msgstr "Secure Access"
+
+msgid "Edit Profile"
+msgstr "Edit Profile"
+
+msgid "Save Changes"
+msgstr "Save Changes"
+
+msgid "First Name"
+msgstr "First Name"
+
+msgid "Last Name"
+msgstr "Last Name"
+
+msgid "My Health Portal"
+msgstr "My Health Portal"
+
+msgid "My Information"
+msgstr "My Information"
+
+msgid "My Appointments"
+msgstr "My Appointments"
+
+msgid "My Prescriptions"
+msgstr "My Prescriptions"
+
+msgid "Administrator"
+msgstr "Administrator"
+
+msgid "Nurse"
+msgstr "Nurse"
+
+msgid "Cashier"
+msgstr "Cashier"
+
+msgid "Receptionist"
+msgstr "Receptionist"
+
 msgid "Language"
 msgstr "Language"
 
@@ -88,3 +550,126 @@ msgstr "English"
 
 msgid "French"
 msgstr "French"
+
+msgid "Schedule Appointment"
+msgstr "Schedule Appointment"
+
+msgid "Appointment for"
+msgstr "Appointment for"
+
+msgid "Unassigned"
+msgstr "Unassigned"
+
+msgid "Reason for visit"
+msgstr "Reason for visit"
+
+msgid "Schedule"
+msgstr "Schedule"
+
+msgid "Add Medicine"
+msgstr "Add Medicine"
+
+msgid "Save Record"
+msgstr "Save Record"
+
+msgid "Create Bill"
+msgstr "Create Bill"
+
+msgid "Bill Items"
+msgstr "Bill Items"
+
+msgid "Add Item"
+msgstr "Add Item"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Quantity"
+msgstr "Quantity"
+
+msgid "Unit Price"
+msgstr "Unit Price"
+
+msgid "Subtotal"
+msgstr "Subtotal"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Record Transaction"
+msgstr "Record Transaction"
+
+msgid "Transaction Details"
+msgstr "Transaction Details"
+
+msgid "Amount"
+msgstr "Amount"
+
+msgid "Reference"
+msgstr "Reference"
+
+msgid "Generate Payroll"
+msgstr "Generate Payroll"
+
+msgid "All Bills"
+msgstr "All Bills"
+
+msgid "Bills & Invoices"
+msgstr "Bills & Invoices"
+
+msgid "Stock Movement History"
+msgstr "Stock Movement History"
+
+msgid "Daily Attendance"
+msgstr "Daily Attendance"
+
+msgid "Add Medical Record"
+msgstr "Add Medical Record"
+
+msgid "New Medical Record"
+msgstr "New Medical Record"
+
+msgid "Chief Complaint"
+msgstr "Chief Complaint"
+
+msgid "Diagnosis"
+msgstr "Diagnosis"
+
+msgid "Treatment"
+msgstr "Treatment"
+
+msgid "Follow-up Date"
+msgstr "Follow-up Date"
+
+msgid "Additional Notes"
+msgstr "Additional Notes"
+
+msgid "No patients found."
+msgstr "No patients found."
+
+msgid "No staff members."
+msgstr "No staff members."
+
+msgid "No transactions."
+msgstr "No transactions."
+
+msgid "No payroll generated."
+msgstr "No payroll generated."
+
+msgid "No movements yet."
+msgstr "No movements yet."
+
+msgid "No prescriptions yet."
+msgstr "No prescriptions yet."
+
+msgid "No medicines found."
+msgstr "No medicines found."
+
+msgid "No appointments found."
+msgstr "No appointments found."
+
+msgid "Patient portal"
+msgstr "Patient portal"
+
+msgid "No patient record linked."
+msgstr "No patient record linked."

@@ -1,36 +1,32 @@
-{% extends "base.html" %}
-{% block title %}Attendance{% endblock %}
-{% block page_title %}Daily Attendance – {{ today|date:"d M Y" }}{% endblock %}
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% trans "Attendance" %}{% endblock %}
+{% block page_title %}{% trans "Daily Attendance" %} – {{ today|date:"d M Y" }}{% endblock %}
 {% block content %}
 <div class="card">
-  <div class="ch"><span class="ct">Mark Attendance for Today</span></div>
-  <div class="cb">
-    <form method="post">{% csrf_token %}
-      <div class="tw"><table>
-        <thead><tr><th>Staff Member</th><th>Department</th><th>Status</th><th>Check In</th><th>Check Out</th></tr></thead>
-        <tbody>
-        {% for s in staff %}
-        <tr>
-          <td><div style="font-weight:600;">{{ s.user.get_full_name }}</div><div class="tmut tsm">{{ s.user.profile.role|title }}</div></td>
-          <td class="tmut">{{ s.get_department_display }}</td>
-          <td>
-            <select name="status_{{ s.pk }}" style="width:130px;">
-              <option value="present">Present</option>
-              <option value="absent">Absent</option>
-              <option value="leave">Leave</option>
-              <option value="half_day">Half Day</option>
-            </select>
-          </td>
-          <td><input type="time" name="checkin_{{ s.pk }}" style="width:110px;"></td>
-          <td><input type="time" name="checkout_{{ s.pk }}" style="width:110px;"></td>
-        </tr>
-        {% empty %}
-        <tr><td colspan="5" style="text-align:center;padding:32px;color:#94a3b8;">No staff members found. Add staff first.</td></tr>
-        {% endfor %}
-        </tbody>
-      </table></div>
-      <div class="mt4"><button type="submit" class="btn btn-pri">Save Attendance</button></div>
-    </form>
-  </div>
+  <div class="ch"><span class="ct">{% trans "Mark Attendance for Today" %}</span></div>
+  <div class="cb"><form method="post">{% csrf_token %}
+    <div class="tw"><table>
+      <thead><tr><th>{% trans "Staff Member" %}</th><th>{% trans "Department" %}</th><th>{% trans "Status" %}</th><th>{% trans "Check In" %}</th><th>{% trans "Check Out" %}</th></tr></thead>
+      <tbody>
+      {% for s in staff %}
+      <tr>
+        <td><div style="font-weight:600;">{{ s.user.get_full_name }}</div><div class="tmut tsm">{{ s.user.profile.role|title }}</div></td>
+        <td class="tmut">{{ s.get_department_display }}</td>
+        <td>
+          <select name="status_{{ s.pk }}" style="width:130px;">
+            <option value="present">{% trans "Present" %}</option>
+            <option value="absent">{% trans "Absent" %}</option>
+            <option value="leave">{% trans "Leave" %}</option>
+            <option value="half_day">{% trans "Half Day" %}</option>
+          </select>
+        </td>
+        <td><input type="time" name="checkin_{{ s.pk }}" style="width:110px;"></td>
+        <td><input type="time" name="checkout_{{ s.pk }}" style="width:110px;"></td>
+      </tr>
+      {% empty %}<tr><td colspan="5" style="text-align:center;padding:32px;color:#94a3b8;">{% trans "No staff members found." %}</td></tr>{% endfor %}
+      </tbody>
+    </table></div>
+    <div class="mt4"><button type="submit" class="btn btn-pri">{% trans "Save Attendance" %}</button></div>
+  </form></div>
 </div>
 {% endblock %}

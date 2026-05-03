@@ -1,18 +1,18 @@
-{% extends "base.html" %}
-{% block title %}My Profile{% endblock %}
-{% block page_title %}My Profile{% endblock %}
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% trans "My Profile" %}{% endblock %}
+{% block page_title %}{% trans "My Profile" %}{% endblock %}
 {% block content %}
 <div class="card" style="max-width:600px;">
-  <div class="ch"><span class="ct">Edit Profile</span></div>
+  <div class="ch"><span class="ct">{% trans "Edit Profile" %}</span></div>
   <div class="cb">
     <form method="post">{% csrf_token %}
       <div class="fgrid">
-        <div class="fg"><label>First Name</label><input type="text" name="first_name" value="{{ request.user.first_name }}"></div>
-        <div class="fg"><label>Last Name</label><input type="text" name="last_name" value="{{ request.user.last_name }}"></div>
-        <div class="fg"><label>Email</label><input type="email" name="email" value="{{ request.user.email }}"></div>
-        <div class="fg"><label>Phone</label><input type="text" name="phone" value="{{ profile.phone }}"></div>
+        <div class="fg"><label>{% trans "First Name" %}</label><input type="text" name="first_name" value="{{ request.user.first_name }}"></div>
+        <div class="fg"><label>{% trans "Last Name" %}</label><input type="text" name="last_name" value="{{ request.user.last_name }}"></div>
+        <div class="fg"><label>{% trans "Email" %}</label><input type="email" name="email" value="{{ request.user.email }}"></div>
+        <div class="fg"><label>{% trans "Phone" %}</label><input type="text" name="phone" value="{{ profile.phone }}"></div>
       </div>
-      <div class="mt4"><button type="submit" class="btn btn-pri">Save Changes</button></div>
+      <div class="mt4"><button type="submit" class="btn btn-pri">{% trans "Save Changes" %}</button></div>
     </form>
   </div>
 </div>

@@ -1,125 +1,71 @@
 {% extends "base.html" %}
-{% block title %}Dashboard – CLINICAPP{% endblock %}
-{% block page_title %}Dashboard{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Dashboard" %} – CLINICAPP{% endblock %}
+{% block page_title %}{% trans "Dashboard" %}{% endblock %}
 {% block topbar_actions %}
 <a href="{% url 'patient_create' %}" class="btn btn-pri">
-  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6z"/></svg>New Patient
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6z"/></svg>
+  <span class="btn-label">{% trans "New Patient" %}</span>
 </a>
-<a href="{% url 'appointment_create' %}" class="btn btn-out">+ Appointment</a>
+<a href="{% url 'appointment_create' %}" class="btn btn-out">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5C3.89 3 3 3.9 3 5v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zm-7-8h-2v2H8v2h2v2h2v-2h2v-2h-2z"/></svg>
+  <span class="btn-label">{% trans "Appointment" %}</span>
+</a>
 {% endblock %}
-
 {% block extra_css %}<style>
-/* Dashboard-specific 2-col layout */
 .dg{display:grid;grid-template-columns:2fr 1fr;gap:18px;}
 .ai{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid #f0f7f5;}
 .ai:last-child{border-bottom:none;}
-.at{font-size:12.5px;font-weight:600;color:#00897b;min-width:46px;background:#e0f2f1;
-    padding:3px 7px;border-radius:5px;text-align:center;flex-shrink:0;}
+.at{font-size:12.5px;font-weight:600;color:#00897b;min-width:46px;background:#e0f2f1;padding:3px 7px;border-radius:5px;text-align:center;flex-shrink:0;}
 .an{font-size:13.5px;font-weight:500;}.aty{font-size:12px;color:#5f7976;}
-.lsi{display:flex;align-items:center;justify-content:space-between;padding:8px 0;
-     border-bottom:1px solid #f0f7f5;font-size:13px;}
+.lsi{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f7f5;font-size:13px;}
 .lsi:last-child{border-bottom:none;}
 .lsq{font-weight:600;color:#e53935;background:#ffebee;padding:2px 8px;border-radius:5px;font-size:12px;flex-shrink:0;}
-/* Chart */
 .bars{display:flex;align-items:flex-end;justify-content:space-around;height:110px;gap:5px;padding-top:8px;}
 .bw{display:flex;flex-direction:column;align-items:center;gap:2px;flex:1;}
-.b{width:100%;border-radius:4px 4px 0 0;min-height:2px;transition:height .4s ease;}
+.b{width:100%;border-radius:4px 4px 0 0;min-height:2px;}
 .b.inc{background:#4db6ac;}.b.exp{background:#ef9a9a;}
 .bd{font-size:10px;color:#5f7976;margin-top:3px;}
-
 @media(max-width:900px){.dg{grid-template-columns:1fr;}}
-@media(max-width:520px){
-  .an{font-size:13px;}
-  .aty{font-size:11.5px;}
-  .bars{height:80px;}
-  .bd{font-size:9px;}
-}
+@media(max-width:380px){.dg{gap:10px;}.at{font-size:11px;min-width:40px;}.bars{height:65px;}}
 </style>{% endblock %}
-
 {% block content %}
-<!-- Vital stats -->
 <div class="sg">
-  <div class="sc" style="--sc-accent:#00897b">
-    <div class="si teal"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
-    <div><div class="sv">{{ total_patients }}</div><div class="sl">Total Patients</div></div>
-  </div>
-  <div class="sc" style="--sc-accent:#43a047">
-    <div class="si green"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2z"/></svg></div>
-    <div><div class="sv">{{ today_appointments }}</div><div class="sl">Today's Appts</div></div>
-  </div>
-  <div class="sc" style="--sc-accent:#fb8c00">
-    <div class="si amber"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.35C18 2.99 16.01 1 13.65 1c-1.3 0-2.48.56-3.33 1.44L9 3.77l-1.32-1.33C6.83 1.56 5.65 1 4.35 1 1.99 1 0 2.99 0 5.35c0 1.3.56 2.48 1.44 3.33L9 16.24l3-3V17h8c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div>
-    <div><div class="sv">{{ low_stock }}</div><div class="sl">Low Stock</div></div>
-  </div>
-  <div class="sc" style="--sc-accent:#43a047">
-    <div class="si green"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21z"/></svg></div>
-    <div><div class="sv">{{ today_income|floatformat:0 }}</div><div class="sl">Income (XAF)</div></div>
-  </div>
-  <div class="sc" style="--sc-accent:#e53935">
-    <div class="si red"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2z"/></svg></div>
-    <div><div class="sv">{{ today_expense|floatformat:0 }}</div><div class="sl">Expenses (XAF)</div></div>
-  </div>
-  <div class="sc" style="--sc-accent:#1e88e5">
-    <div class="si blue"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
-    <div><div class="sv">{{ net|floatformat:0 }}</div><div class="sl">Net Cash (XAF)</div></div>
-  </div>
+  <div class="sc" style="--sc-accent:#00897b"><div class="si teal"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div><div><div class="sv">{{ total_patients }}</div><div class="sl">{% trans "Total Patients" %}</div></div></div>
+  <div class="sc" style="--sc-accent:#43a047"><div class="si green"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2z"/></svg></div><div><div class="sv">{{ today_appointments }}</div><div class="sl">{% trans "Today's Appts" %}</div></div></div>
+  <div class="sc" style="--sc-accent:#fb8c00"><div class="si amber"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.35C18 2.99 16.01 1 13.65 1c-1.3 0-2.48.56-3.33 1.44L9 3.77l-1.32-1.33C6.83 1.56 5.65 1 4.35 1 1.99 1 0 2.99 0 5.35c0 1.3.56 2.48 1.44 3.33L9 16.24l3-3V17h8c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div><div><div class="sv">{{ low_stock }}</div><div class="sl">{% trans "Low Stock" %}</div></div></div>
+  <div class="sc" style="--sc-accent:#43a047"><div class="si green"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21z"/></svg></div><div><div class="sv">{{ today_income|floatformat:0 }}</div><div class="sl">{% trans "Income (XAF)" %}</div></div></div>
+  <div class="sc" style="--sc-accent:#e53935"><div class="si red"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2z"/></svg></div><div><div class="sv">{{ today_expense|floatformat:0 }}</div><div class="sl">{% trans "Expenses (XAF)" %}</div></div></div>
+  <div class="sc" style="--sc-accent:#1e88e5"><div class="si blue"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div><div><div class="sv">{{ net|floatformat:0 }}</div><div class="sl">{% trans "Net Cash (XAF)" %}</div></div></div>
 </div>
-
 <div class="dg">
-  <!-- Appointments -->
   <div class="card">
-    <div class="ch">
-      <span class="ct">Today's Appointments</span>
-      <a href="{% url 'appointment_list' %}" class="btn btn-out btn-sm">View All</a>
-    </div>
+    <div class="ch"><span class="ct">{% trans "Today's Appointments" %}</span><a href="{% url 'appointment_list' %}" class="btn btn-out btn-sm">{% trans "View All" %}</a></div>
     <div class="cb">
       {% for a in recent_appointments %}
       <div class="ai">
         <div class="at">{{ a.time|time:"H:i" }}</div>
-        <div style="flex:1;min-width:0;">
-          <div class="an" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ a.patient.full_name }}</div>
-          <div class="aty">{{ a.get_appointment_type_display }}{% if a.doctor %} · Dr. {{ a.doctor.last_name }}{% endif %}</div>
-        </div>
+        <div style="flex:1;min-width:0;"><div class="an" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ a.patient.full_name }}</div><div class="aty">{{ a.get_appointment_type_display }}{% if a.doctor %} · Dr. {{ a.doctor.last_name }}{% endif %}</div></div>
         <span class="badge {% if a.status == 'completed' %}bg-green{% elif a.status == 'cancelled' %}bg-red{% elif a.status == 'in_progress' %}bg-blue{% else %}bg-yellow{% endif %}" style="flex-shrink:0;">{{ a.get_status_display }}</span>
       </div>
-      {% empty %}
-      <p class="tmut tsm" style="text-align:center;padding:24px 0;">No appointments scheduled today.</p>
-      {% endfor %}
+      {% empty %}<p class="tmut tsm" style="text-align:center;padding:24px 0;">{% trans "No appointments scheduled today." %}</p>{% endfor %}
     </div>
   </div>
-
-  <!-- Low stock -->
   <div class="card">
-    <div class="ch"><span class="ct">Low Stock Alert</span><a href="{% url 'medicine_list' %}" class="btn btn-out btn-sm">Pharmacy</a></div>
+    <div class="ch"><span class="ct">{% trans "Low Stock Alert" %}</span><a href="{% url 'medicine_list' %}" class="btn btn-out btn-sm">{% trans "Pharmacy" %}</a></div>
     <div class="cb">
       {% for m in low_stock_meds %}
-      <div class="lsi">
-        <div style="min-width:0;flex:1;margin-right:8px;">
-          <div style="font-weight:500;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ m.name }}</div>
-          <div class="tsm tmut">{{ m.get_unit_display }}</div>
-        </div>
-        <span class="lsq">{{ m.quantity }} left</span>
-      </div>
-      {% empty %}
-      <div style="text-align:center;padding:20px 0;">
-        <div style="font-size:22px;margin-bottom:6px;">✓</div>
-        <p class="tmut tsm">All stock levels are adequate</p>
-      </div>
-      {% endfor %}
+      <div class="lsi"><div style="min-width:0;flex:1;margin-right:8px;"><div style="font-weight:500;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ m.name }}</div><div class="tsm tmut">{{ m.get_unit_display }}</div></div><span class="lsq">{{ m.quantity }} {% trans "left" %}</span></div>
+      {% empty %}<div style="text-align:center;padding:20px 0;"><div style="font-size:22px;margin-bottom:6px;">✓</div><p class="tmut tsm">{% trans "All stock levels are adequate" %}</p></div>{% endfor %}
     </div>
   </div>
 </div>
-
-<!-- Cash flow chart -->
 <div class="card mt6">
-  <div class="ch">
-    <span class="ct">7-Day Cash Flow Overview</span>
-    <a href="{% url 'finance_dashboard' %}" class="btn btn-out btn-sm">Finance Details</a>
-  </div>
+  <div class="ch"><span class="ct">{% trans "7-Day Cash Flow Overview" %}</span><a href="{% url 'finance_dashboard' %}" class="btn btn-out btn-sm">{% trans "Finance Details" %}</a></div>
   <div class="cb">
     <div class="flex gap3" style="margin-bottom:12px;">
-      <span class="tsm flex ic gap2"><span style="width:10px;height:10px;background:#4db6ac;border-radius:2px;display:inline-block;"></span>Income</span>
-      <span class="tsm flex ic gap2"><span style="width:10px;height:10px;background:#ef9a9a;border-radius:2px;display:inline-block;"></span>Expense</span>
+      <span class="tsm flex ic gap2"><span style="width:10px;height:10px;background:#4db6ac;border-radius:2px;display:inline-block;"></span>{% trans "Income" %}</span>
+      <span class="tsm flex ic gap2"><span style="width:10px;height:10px;background:#ef9a9a;border-radius:2px;display:inline-block;"></span>{% trans "Expense" %}</span>
     </div>
     <div class="bars" id="chart"></div>
   </div>
@@ -129,7 +75,7 @@ const d={{week_data|safe}};const mx=Math.max(...d.map(x=>Math.max(x.income,x.exp
 const c=document.getElementById('chart');
 d.forEach(x=>{const w=document.createElement('div');w.className='bw';
 const ih=Math.max((x.income/mx)*100,2);const eh=Math.max((x.expense/mx)*100,2);
-w.innerHTML=`<div style="display:flex;align-items:flex-end;gap:2px;height:100px;"><div class="b inc" style="height:${ih}px" title="Income: ${x.income}"></div><div class="b exp" style="height:${eh}px" title="Expense: ${x.expense}"></div></div><div class="bd">${x.day}</div>`;
+w.innerHTML=`<div style="display:flex;align-items:flex-end;gap:2px;height:100px;"><div class="b inc" style="height:${ih}px"></div><div class="b exp" style="height:${eh}px"></div></div><div class="bd">${x.day}</div>`;
 c.appendChild(w);});
 </script>
 {% endblock %}

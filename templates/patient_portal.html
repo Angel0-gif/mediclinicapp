@@ -1,57 +1,52 @@
-{% extends "base.html" %}{% block title %}My Health Portal{% endblock %}{% block page_title %}My Health Portal{% endblock %}
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% trans "My Health Portal" %}{% endblock %}{% block page_title %}{% trans "My Health Portal" %}{% endblock %}
 {% block content %}
 {% if patient %}
 <div class="g2">
   <div class="card">
-    <div class="ch"><span class="ct">My Information</span></div>
+    <div class="ch"><span class="ct">{% trans "My Information" %}</span></div>
     <div class="cb">
       <div class="fgrid" style="grid-template-columns:1fr 1fr;">
-        <div><div class="tmut tsm">Name</div><div style="font-weight:600;">{{ patient.full_name }}</div></div>
-        <div><div class="tmut tsm">Age</div><div style="font-weight:600;">{{ patient.age }} years</div></div>
-        <div><div class="tmut tsm">Blood Group</div><div><span class="badge bg-red">{{ patient.blood_group|default:"—" }}</span></div></div>
-        <div><div class="tmut tsm">Phone</div><div>{{ patient.phone }}</div></div>
+        <div><div class="tmut tsm">{% trans "Name" %}</div><div style="font-weight:600;">{{ patient.full_name }}</div></div>
+        <div><div class="tmut tsm">{% trans "Age" %}</div><div style="font-weight:600;">{{ patient.age }} {% trans "years" %}</div></div>
+        <div><div class="tmut tsm">{% trans "Blood Group" %}</div><div><span class="badge bg-red">{{ patient.blood_group|default:"—" }}</span></div></div>
+        <div><div class="tmut tsm">{% trans "Phone" %}</div><div>{{ patient.phone }}</div></div>
       </div>
-      {% if patient.allergies %}<div class="mt4" style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:12px;"><div style="font-weight:700;color:#dc2626;">⚠ Known Allergies</div><div style="color:#dc2626;">{{ patient.allergies }}</div></div>{% endif %}
+      {% if patient.allergies %}<div class="mt4" style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:12px;"><div style="font-weight:700;color:#dc2626;">⚠ {% trans "Known Allergies" %}</div><div style="color:#dc2626;">{{ patient.allergies }}</div></div>{% endif %}
     </div>
   </div>
   <div class="card">
-    <div class="ch"><span class="ct">My Appointments</span></div>
+    <div class="ch"><span class="ct">{% trans "My Appointments" %}</span></div>
     <div class="cb">
       {% for a in appointments %}
       <div style="padding:8px 0;border-bottom:1px solid #f1f5f9;">
-        <div class="flex jb ic">
-          <span style="font-weight:600;">{{ a.date|date:"d M Y" }} {{ a.time|time:"H:i" }}</span>
-          <span class="badge {% if a.status == 'completed' %}bg-green{% elif a.status == 'cancelled' %}bg-red{% else %}bg-yellow{% endif %}">{{ a.get_status_display }}</span>
-        </div>
+        <div class="flex jb ic"><span style="font-weight:600;">{{ a.date|date:"d M Y" }} {{ a.time|time:"H:i" }}</span>
+        <span class="badge {% if a.status == 'completed' %}bg-green{% elif a.status == 'cancelled' %}bg-red{% else %}bg-yellow{% endif %}">{{ a.get_status_display }}</span></div>
         <div class="tmut tsm">{{ a.get_appointment_type_display }}{% if a.doctor %} · Dr. {{ a.doctor.last_name }}{% endif %}</div>
       </div>
-      {% empty %}<p class="tmut tsm">No appointments yet.</p>{% endfor %}
+      {% empty %}<p class="tmut tsm">{% trans "No appointments yet." %}</p>{% endfor %}
     </div>
   </div>
 </div>
 <div class="card mt4">
-  <div class="ch"><span class="ct">My Prescriptions</span></div>
+  <div class="ch"><span class="ct">{% trans "My Prescriptions" %}</span></div>
   <div class="tw"><table>
-    <thead><tr><th>Date</th><th>Doctor</th><th>Items</th><th>Status</th></tr></thead>
+    <thead><tr><th>{% trans "Date" %}</th><th>{% trans "Doctor" %}</th><th>{% trans "Items" %}</th><th>{% trans "Status" %}</th></tr></thead>
     <tbody>
     {% for rx in prescriptions %}
     <tr>
       <td>{{ rx.date|date:"d M Y" }}</td>
       <td>{% if rx.doctor %}Dr. {{ rx.doctor.last_name }}{% else %}—{% endif %}</td>
-      <td>
-        {% for item in rx.items.all %}
-        <div class="tsm">{{ item.medicine.name }} – {{ item.dosage }} ({{ item.duration }})</div>
-        {% endfor %}
-      </td>
-      <td><span class="badge {% if rx.is_dispensed %}bg-green{% else %}bg-yellow{% endif %}">{% if rx.is_dispensed %}Dispensed{% else %}Pending{% endif %}</span></td>
+      <td>{% for item in rx.items.all %}<div class="tsm">{{ item.medicine.name }} – {{ item.dosage }} ({{ item.duration }})</div>{% endfor %}</td>
+      <td><span class="badge {% if rx.is_dispensed %}bg-green{% else %}bg-yellow{% endif %}">{% if rx.is_dispensed %}{% trans "Dispensed" %}{% else %}{% trans "Pending" %}{% endif %}</span></td>
     </tr>
-    {% empty %}<tr><td colspan="4" style="text-align:center;padding:24px;color:#94a3b8;">No prescriptions yet.</td></tr>{% endfor %}
+    {% empty %}<tr><td colspan="4" style="text-align:center;padding:24px;color:#94a3b8;">{% trans "No prescriptions yet." %}</td></tr>{% endfor %}
     </tbody>
   </table></div>
 </div>
 {% else %}
 <div class="card"><div class="cb" style="text-align:center;padding:40px;">
-  <p class="tmut">No patient record is linked to your account. Please contact the clinic.</p>
+  <p class="tmut">{% trans "No patient record is linked to your account. Please contact the clinic." %}</p>
 </div></div>
 {% endif %}
 {% endblock %}

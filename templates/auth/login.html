@@ -1,149 +1,78 @@
-<!DOCTYPE html><html lang="en"><head>
+{% load i18n %}
+<!DOCTYPE html><html lang="{{ LANGUAGE_CODE }}"><head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Sign In – CLINICAPP</title>
+<title>{% trans "Sign In" %} – CLINICAPP</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
 body{font-family:'Inter',sans-serif;min-height:100vh;display:flex;background:#f4f7f6;overflow-y:auto;}
-
-.lp{flex:1;background:linear-gradient(160deg,#003d36 0%,#00695c 45%,#004d40 100%);
-    display:flex;flex-direction:column;justify-content:center;align-items:center;
-    padding:60px;color:#fff;position:relative;overflow:hidden;}
-.lp::before{content:'';position:absolute;inset:0;
-  background-image:radial-gradient(circle at 20% 30%,rgba(0,200,170,.08) 0%,transparent 50%),
-                   radial-gradient(circle at 80% 70%,rgba(67,160,71,.1) 0%,transparent 50%);}
-.lp::after{content:'+';position:absolute;font-size:220px;font-weight:300;
-           color:rgba(255,255,255,.04);top:-30px;right:-20px;line-height:1;}
+.lp{flex:1;background:linear-gradient(160deg,#003d36 0%,#00695c 45%,#004d40 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:60px;color:#fff;position:relative;overflow:hidden;}
+.lp::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 30%,rgba(0,200,170,.08) 0%,transparent 50%),radial-gradient(circle at 80% 70%,rgba(67,160,71,.1) 0%,transparent 50%);}
+.lp::after{content:'+';position:absolute;font-size:220px;font-weight:300;color:rgba(255,255,255,.04);top:-30px;right:-20px;line-height:1;}
 .brand{display:flex;align-items:center;gap:14px;margin-bottom:52px;position:relative;}
-.b-ico{width:54px;height:54px;background:rgba(255,255,255,.15);backdrop-filter:blur(4px);
-       border:1px solid rgba(255,255,255,.2);border-radius:14px;
-       display:flex;align-items:center;justify-content:center;}
+.b-ico{width:54px;height:54px;background:rgba(255,255,255,.15);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.2);border-radius:14px;display:flex;align-items:center;justify-content:center;}
 .b-ico svg{width:28px;height:28px;fill:#fff;}
 .b-nm{font-family:'DM Sans',sans-serif;font-size:26px;font-weight:600;}
 .b-nm small{display:block;font-size:12px;color:rgba(255,255,255,.6);font-weight:400;margin-top:1px;}
-.tag{position:relative;text-align:center;max-width:360px;}
+.tag{text-align:center;max-width:360px;position:relative;}
 .tag h2{font-family:'DM Sans',sans-serif;font-size:30px;font-weight:500;line-height:1.3;margin-bottom:14px;}
 .tag p{font-size:14px;color:rgba(255,255,255,.65);line-height:1.7;}
-.pulse-ring{width:160px;height:160px;border-radius:50%;border:1px solid rgba(255,255,255,.08);
-            display:flex;align-items:center;justify-content:center;margin:40px auto 0;position:relative;}
+.pulse-ring{width:160px;height:160px;border-radius:50%;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;margin:40px auto 0;position:relative;}
 .pulse-ring::before{content:'';position:absolute;width:200px;height:200px;border-radius:50%;border:1px solid rgba(255,255,255,.05);}
 .pulse-ring::after{content:'';position:absolute;width:240px;height:240px;border-radius:50%;border:1px solid rgba(255,255,255,.03);}
 .cross-icon{font-size:56px;color:rgba(255,255,255,.5);line-height:1;}
-.feats{margin-top:44px;display:flex;flex-direction:column;gap:13px;position:relative;width:100%;max-width:320px;}
+.feats{margin-top:44px;display:flex;flex-direction:column;gap:13px;width:100%;max-width:320px;position:relative;}
 .feat{display:flex;align-items:center;gap:12px;}
-.fd{width:28px;height:28px;background:rgba(255,255,255,.1);border-radius:7px;
-    display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.fd{width:28px;height:28px;background:rgba(255,255,255,.1);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .fd svg{width:14px;height:14px;fill:rgba(255,255,255,.8);}
 .feat span{font-size:13px;color:rgba(255,255,255,.75);}
-
-/* Right panel */
 .rp{width:440px;background:#fff;display:flex;flex-direction:column;justify-content:center;padding:56px 48px;}
 .rp-header{margin-bottom:28px;}
-.rp-badge{display:inline-flex;align-items:center;gap:6px;background:#e0f2f1;color:#00695c;
-          font-size:11.5px;font-weight:500;padding:4px 10px;border-radius:999px;margin-bottom:16px;}
+.rp-badge{display:inline-flex;align-items:center;gap:6px;background:#e0f2f1;color:#00695c;font-size:11.5px;font-weight:500;padding:4px 10px;border-radius:999px;margin-bottom:16px;}
 .rp-badge svg{width:13px;height:13px;fill:currentColor;}
 .lt{font-family:'DM Sans',sans-serif;font-size:26px;font-weight:500;color:#1a2e2b;margin-bottom:6px;}
 .ls{font-size:13.5px;color:#5f7976;}
 .fg{margin-bottom:14px;}
 .fg label{display:block;font-size:12.5px;font-weight:500;color:#5f7976;margin-bottom:6px;}
-.fg input{width:100%;padding:10px 13px;border:1.5px solid #d0e8e4;border-radius:9px;
-          font-size:14px;font-family:inherit;color:#1a2e2b;
-          transition:border-color .15s,box-shadow .15s;}
+.fg input{width:100%;padding:10px 13px;border:1.5px solid #d0e8e4;border-radius:9px;font-size:14px;font-family:inherit;color:#1a2e2b;transition:border-color .15s,box-shadow .15s;}
 .fg input:focus{outline:none;border-color:#00897b;box-shadow:0 0 0 3px rgba(0,137,123,.1);}
-.btn-login{width:100%;padding:12px;
-           background:linear-gradient(135deg,#00897b,#43a047);
-           color:#fff;border:none;border-radius:9px;font-size:15px;font-weight:500;
-           cursor:pointer;font-family:inherit;transition:opacity .15s,transform .1s;
-           margin-top:4px;letter-spacing:.01em;}
-.btn-login:hover{opacity:.93;}
-.btn-login:active{transform:scale(.98);}
-.alert{padding:10px 13px;border-radius:8px;font-size:13px;margin-bottom:14px;
-       background:#ffebee;color:#c62828;border:1px solid #ef9a9a;}
-
-/* ── Mobile ── */
-@media(max-width:768px){
-  body{flex-direction:column;background:#fff;}
-  .lp{display:none;}
-  .rp{width:100%;padding:0;flex:1;justify-content:flex-start;}
-  .mob-header{background:linear-gradient(135deg,#003d36,#00695c);
-              padding:28px 24px 24px;display:flex;align-items:center;gap:14px;flex-shrink:0;}
-  .mob-ico{width:44px;height:44px;background:rgba(255,255,255,.2);border-radius:12px;
-           border:1px solid rgba(255,255,255,.25);
-           display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .mob-ico svg{width:26px;height:26px;fill:#fff;}
-  .mob-brand{font-family:'DM Sans',sans-serif;font-size:18px;font-weight:600;color:#fff;line-height:1.2;}
-  .mob-brand small{display:block;font-size:11px;color:rgba(255,255,255,.65);font-weight:400;}
-  .rp-inner{padding:28px 24px 32px;flex:1;}
-  .rp-header{margin-bottom:22px;}
-  .lt{font-size:22px;}
-}
-
-/* ── Redmi 13C / 360px ── */
-@media(max-width:400px){
-  .mob-header{padding:18px 16px 16px;}
-  .mob-ico{width:36px;height:36px;}
-  .mob-brand{font-size:15px;}
-  .rp-inner{padding:18px 16px 24px;}
-  .rp-header{margin-bottom:14px;}
-  .lt{font-size:19px;}
-  .ls{font-size:12.5px;}
-  .rp-badge{font-size:11px;padding:3px 8px;margin-bottom:10px;}
-  .fg{margin-bottom:10px;}
-  .fg label{font-size:12px;margin-bottom:4px;}
-  .fg input{padding:9px 11px;font-size:13px;}
-  .btn-login{padding:11px;font-size:14px;margin-top:4px;}
-  .alert{padding:8px 11px;font-size:12px;margin-bottom:10px;}
-}
-
-@media(min-width:769px){
-  .mob-header{display:none;}
-  .rp-inner{padding:0;}
-}
+.btn-login{width:100%;padding:12px;background:linear-gradient(135deg,#00897b,#43a047);color:#fff;border:none;border-radius:9px;font-size:15px;font-weight:500;cursor:pointer;font-family:inherit;transition:opacity .15s,transform .1s;margin-top:4px;}
+.btn-login:hover{opacity:.93;}.btn-login:active{transform:scale(.98);}
+.alert{padding:10px 13px;border-radius:8px;font-size:13px;margin-bottom:14px;background:#ffebee;color:#c62828;border:1px solid #ef9a9a;}
+@media(max-width:768px){body{flex-direction:column;background:#fff;}.lp{display:none;}.rp{width:100%;padding:0;flex:1;justify-content:flex-start;}
+.mob-header{background:linear-gradient(135deg,#003d36,#00695c);padding:28px 24px 24px;display:flex;align-items:center;gap:14px;flex-shrink:0;}
+.mob-ico{width:44px;height:44px;background:rgba(255,255,255,.2);border-radius:12px;border:1px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.mob-ico svg{width:26px;height:26px;fill:#fff;}
+.mob-brand{font-family:'DM Sans',sans-serif;font-size:18px;font-weight:600;color:#fff;line-height:1.2;}
+.mob-brand small{display:block;font-size:11px;color:rgba(255,255,255,.65);font-weight:400;}
+.rp-inner{padding:28px 24px 32px;flex:1;}}
+@media(max-width:400px){.mob-header{padding:18px 16px 16px;}.mob-ico{width:36px;height:36px;}.mob-brand{font-size:15px;}.rp-inner{padding:18px 16px 24px;}.rp-header{margin-bottom:14px;}.lt{font-size:19px;}.ls{font-size:12.5px;}.rp-badge{font-size:11px;margin-bottom:10px;}.fg{margin-bottom:10px;}.fg label{font-size:12px;}.fg input{padding:9px 11px;font-size:13px;}.btn-login{padding:11px;font-size:14px;}}
+@media(min-width:769px){.mob-header{display:none;}.rp-inner{padding:0;}}
 </style></head><body>
-
 <div class="lp">
-  <div class="brand">
-    <div class="b-ico"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H6v-.57c0-2 4-3.08 6-3.08s6 1.08 6 3.08V18z"/></svg></div>
-    <div><div class="b-nm">CLINICAPP<small>Clinic Management System</small></div></div>
-  </div>
-  <div class="tag">
-    <h2>Caring for patients, powered by technology</h2>
-    <p>A complete platform to manage your clinic's daily operations with clarity and efficiency.</p>
-  </div>
+  <div class="brand"><div class="b-ico"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H6v-.57c0-2 4-3.08 6-3.08s6 1.08 6 3.08V18z"/></svg></div><div><div class="b-nm">CLINICAPP<small>{% trans "Clinic Management System" %}</small></div></div></div>
+  <div class="tag"><h2>{% trans "Caring for patients, powered by technology" %}</h2><p>{% trans "A complete platform to manage your clinic's daily operations." %}</p></div>
   <div class="pulse-ring"><div class="cross-icon">&#10010;</div></div>
   <div class="feats">
-    <div class="feat"><div class="fd"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div><span>Patient records & consultation history</span></div>
-    <div class="feat"><div class="fd"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.35C18 2.99 16.01 1 13.65 1c-1.3 0-2.48.56-3.33 1.44L9 3.77l-1.32-1.33C6.83 1.56 5.65 1 4.35 1 1.99 1 0 2.99 0 5.35c0 1.3.56 2.48 1.44 3.33L9 16.24l3-3V17h8c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div><span>Pharmacy inventory & prescriptions</span></div>
-    <div class="feat"><div class="fd"><svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79z"/></svg></div><span>Billing, cash flow & financial reports</span></div>
+    <div class="feat"><div class="fd"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div><span>{% trans "Patient records & consultation history" %}</span></div>
+    <div class="feat"><div class="fd"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.35C18 2.99 16.01 1 13.65 1c-1.3 0-2.48.56-3.33 1.44L9 3.77l-1.32-1.33C6.83 1.56 5.65 1 4.35 1 1.99 1 0 2.99 0 5.35c0 1.3.56 2.48 1.44 3.33L9 16.24l3-3V17h8c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div><span>{% trans "Pharmacy inventory & prescriptions" %}</span></div>
+    <div class="feat"><div class="fd"><svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79z"/></svg></div><span>{% trans "Billing, cash flow & financial reports" %}</span></div>
   </div>
 </div>
-
 <div class="rp">
-  <div class="mob-header">
-    <div class="mob-ico"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H6v-.57c0-2 4-3.08 6-3.08s6 1.08 6 3.08V18z"/></svg></div>
-    <div class="mob-brand">CLINICAPP<small>Clinic Management System</small></div>
-  </div>
+  <div class="mob-header"><div class="mob-ico"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H6v-.57c0-2 4-3.08 6-3.08s6 1.08 6 3.08V18z"/></svg></div><div class="mob-brand">CLINICAPP<small>{% trans "Clinic Management System" %}</small></div></div>
   <div class="rp-inner">
     <div class="rp-header">
-      <div class="rp-badge">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L21 8l-9 9z"/></svg>
-        Secure Access
-      </div>
-      <div class="lt">Welcome back</div>
-      <div class="ls">Sign in to your MediCare account</div>
+      <div class="rp-badge"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L21 8l-9 9z"/></svg>{% trans "Secure Access" %}</div>
+      <div class="lt">{% trans "Welcome back" %}</div>
+      <div class="ls">{% trans "Sign in to your MediCare account" %}</div>
     </div>
     {% if messages %}{% for m in messages %}<div class="alert">{{ m }}</div>{% endfor %}{% endif %}
     <form method="post">{% csrf_token %}
-      <div class="fg">
-        <label>Username</label>
-        <input type="text" name="username" placeholder="Enter your username" required autofocus autocomplete="username">
-      </div>
-      <div class="fg">
-        <label>Password</label>
-        <input type="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
-      </div>
-      <button type="submit" class="btn-login">Sign In &#8594;</button>
+      <div class="fg"><label>{% trans "Username" %}</label><input type="text" name="username" placeholder="{% trans 'Enter your username' %}" required autofocus autocomplete="username"></div>
+      <div class="fg"><label>{% trans "Password" %}</label><input type="password" name="password" placeholder="{% trans 'Enter your password' %}" required autocomplete="current-password"></div>
+      <button type="submit" class="btn-login">{% trans "Sign In" %} &#8594;</button>
     </form>
   </div>
 </div>

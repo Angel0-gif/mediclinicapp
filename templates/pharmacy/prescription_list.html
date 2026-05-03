@@ -1,28 +1,25 @@
-{% extends "base.html" %}{% block title %}Prescriptions{% endblock %}{% block page_title %}Prescriptions{% endblock %}
-{% block topbar_actions %}<a href="{% url 'prescription_create' %}" class="btn btn-pri">+ New Prescription</a>{% endblock %}
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% trans "Prescriptions" %}{% endblock %}{% block page_title %}{% trans "Prescriptions" %}{% endblock %}
+{% block topbar_actions %}<a href="{% url 'prescription_create' %}" class="btn btn-pri">+ {% trans "New Prescription" %}</a>{% endblock %}
 {% block content %}
-<div class="card">
-  <div class="tw"><table>
-    <thead><tr><th>Rx #</th><th>Patient</th><th>Doctor</th><th>Date</th><th>Items</th><th>Status</th><th>Actions</th></tr></thead>
-    <tbody>
-    {% for rx in prescriptions %}
-    <tr>
-      <td style="font-weight:700;color:#0ea5e9;">Rx #{{ rx.pk }}</td>
-      <td><a href="{% url 'patient_detail' rx.patient.pk %}" style="font-weight:600;color:#0ea5e9;text-decoration:none;">{{ rx.patient.full_name }}</a></td>
-      <td>{% if rx.doctor %}Dr. {{ rx.doctor.last_name }}{% else %}—{% endif %}</td>
-      <td>{{ rx.date|date:"d M Y" }}</td>
-      <td>{{ rx.items.count }} item(s)</td>
-      <td><span class="badge {% if rx.is_dispensed %}bg-green{% else %}bg-yellow{% endif %}">{% if rx.is_dispensed %}Dispensed{% else %}Pending{% endif %}</span></td>
-      <td>
-        {% if not rx.is_dispensed %}
-        <form method="post" action="{% url 'dispense_prescription' rx.pk %}" style="display:inline;">{% csrf_token %}
-          <button class="btn btn-suc btn-sm" onclick="return confirm('Dispense this prescription?')">Dispense</button>
-        </form>
-        {% endif %}
-      </td>
-    </tr>
-    {% empty %}<tr><td colspan="7" style="text-align:center;padding:32px;color:#94a3b8;">No prescriptions.</td></tr>{% endfor %}
-    </tbody>
-  </table></div>
-</div>
+<div class="card"><div class="tw"><table>
+  <thead><tr><th>Rx #</th><th>{% trans "Patient" %}</th><th>{% trans "Doctor" %}</th><th>{% trans "Date" %}</th><th>{% trans "Items" %}</th><th>{% trans "Status" %}</th><th>{% trans "Actions" %}</th></tr></thead>
+  <tbody>
+  {% for rx in prescriptions %}
+  <tr>
+    <td style="font-weight:700;color:#0ea5e9;">Rx #{{ rx.pk }}</td>
+    <td><a href="{% url 'patient_detail' rx.patient.pk %}" style="font-weight:600;color:#0ea5e9;text-decoration:none;">{{ rx.patient.full_name }}</a></td>
+    <td>{% if rx.doctor %}Dr. {{ rx.doctor.last_name }}{% else %}—{% endif %}</td>
+    <td>{{ rx.date|date:"d M Y" }}</td>
+    <td>{{ rx.items.count }} {% trans "item(s)" %}</td>
+    <td><span class="badge {% if rx.is_dispensed %}bg-green{% else %}bg-yellow{% endif %}">{% if rx.is_dispensed %}{% trans "Dispensed" %}{% else %}{% trans "Pending" %}{% endif %}</span></td>
+    <td>{% if not rx.is_dispensed %}
+      <form method="post" action="{% url 'dispense_prescription' rx.pk %}" style="display:inline;">{% csrf_token %}
+        <button class="btn btn-suc btn-sm" onclick="return confirm('{% trans "Dispense this prescription?" %}')">{% trans "Dispense" %}</button>
+      </form>{% endif %}
+    </td>
+  </tr>
+  {% empty %}<tr><td colspan="7" style="text-align:center;padding:32px;color:#94a3b8;">{% trans "No prescriptions yet." %}</td></tr>{% endfor %}
+  </tbody>
+</table></div></div>
 {% endblock %}

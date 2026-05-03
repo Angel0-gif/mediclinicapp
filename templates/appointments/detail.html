@@ -1,19 +1,88 @@
-{% extends "base.html" %}{% block title %}Appointment Detail{% endblock %}{% block page_title %}Appointment Detail{% endblock %}
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{{ patient.full_name }}{% endblock %}
+{% block page_title %}{{ patient.full_name }}{% endblock %}
+{% block topbar_actions %}
+<a href="{% url 'patient_edit' patient.pk %}" class="btn btn-out btn-sm">{% trans "Edit" %}</a>
+<a href="{% url 'medical_record_create' patient.pk %}" class="btn btn-pri btn-sm">+ {% trans "Medical Record" %}</a>
+<a href="{% url 'appointment_create' %}" class="btn btn-out btn-sm">+ {% trans "Appointment" %}</a>
+<a href="{% url 'bill_create_for_patient' patient.pk %}" class="btn btn-out btn-sm">+ {% trans "Bill" %}</a>
+{% endblock %}
 {% block content %}
-<div class="card" style="max-width:600px;">
-  <div class="ch"><span class="ct">Appointment #{{ appt.pk }}</span>
-    <span class="badge {% if appt.status == 'completed' %}bg-green{% elif appt.status == 'cancelled' %}bg-red{% else %}bg-yellow{% endif %}">{{ appt.get_status_display }}</span>
-  </div>
-  <div class="cb">
-    <div class="fgrid">
-      <div><div class="tmut tsm">Patient</div><div style="font-weight:600;">{{ appt.patient.full_name }}</div></div>
-      <div><div class="tmut tsm">Doctor</div><div>{% if appt.doctor %}Dr. {{ appt.doctor.get_full_name }}{% else %}—{% endif %}</div></div>
-      <div><div class="tmut tsm">Date & Time</div><div>{{ appt.date|date:"d M Y" }} at {{ appt.time|time:"H:i" }}</div></div>
-      <div><div class="tmut tsm">Type</div><div>{{ appt.get_appointment_type_display }}</div></div>
+<div class="g2">
+  <div class="card">
+    <div class="ch"><span class="ct">{% trans "Patient Info" %}</span></div>
+    <div class="cb">
+      <div class="fgrid" style="grid-template-columns:1fr 1fr;">
+        <div><div class="tmut tsm">{% trans "Full Name" %}</div><div style="font-weight:600;">{{ patient.full_name }}</div></div>
+        <div><div class="tmut tsm">{% trans "Age" %}</div><div style="font-weight:600;">{{ patient.age }} {% trans "years" %}</div></div>
+        <div><div class="tmut tsm">{% trans "Date of Birth" %}</div><div>{{ patient.date_of_birth|date:"d M Y" }}</div></div>
+        <div><div class="tmut tsm">{% trans "Gender" %}</div><div>{{ patient.get_gender_display }}</div></div>
+        <div><div class="tmut tsm">{% trans "Blood Group" %}</div><div><span class="badge bg-red">{{ patient.blood_group|default:"—" }}</span></div></div>
+        <div><div class="tmut tsm">{% trans "Phone" %}</div><div>{{ patient.phone }}</div></div>
+        <div><div class="tmut tsm">{% trans "Email" %}</div><div>{{ patient.email|default:"—" }}</div></div>
+        <div><div class="tmut tsm">{% trans "Registered" %}</div><div>{{ patient.registered_at|date:"d M Y" }}</div></div>
+      </div>
+      {% if patient.address %}<div class="mt4"><div class="tmut tsm">{% trans "Address" %}</div><div>{{ patient.address }}</div></div>{% endif %}
+      {% if patient.allergies %}<div class="mt4"><div class="tmut tsm" style="color:#dc2626;">⚠ {% trans "Allergies" %}</div><div style="color:#dc2626;">{{ patient.allergies }}</div></div>{% endif %}
+      {% if patient.chronic_conditions %}<div class="mt4"><div class="tmut tsm">{% trans "Chronic Conditions" %}</div><div>{{ patient.chronic_conditions }}</div></div>{% endif %}
     </div>
-    {% if appt.reason %}<div class="mt4"><div class="tmut tsm">Reason</div><div>{{ appt.reason }}</div></div>{% endif %}
-    {% if appt.notes %}<div class="mt4"><div class="tmut tsm">Notes</div><div>{{ appt.notes }}</div></div>{% endif %}
-    <div class="mt4"><a href="{% url 'appointment_list' %}" class="btn btn-out">← Back</a></div>
+  </div>
+  <div class="card">
+    <div class="ch"><span class="ct">{% trans "Recent Appointments" %}</span></div>
+    <div class="cb">
+      {% for a in appointments %}
+      <div style="padding:8px 0;border-bottom:1px solid #f1f5f9;">
+        <div class="flex jb ic"><span style="font-weight:600;font-size:13.5px;">{{ a.date|date:"d M Y" }} {{ a.time|time:"H:i" }}</span>
+        <span class="badge {% if a.status == 'completed' %}bg-green{% elif a.status == 'cancelled' %}bg-red{% else %}bg-yellow{% endif %}">{{ a.get_status_display }}</span></div>
+        <div class="tmut tsm">{{ a.get_appointment_type_display }}{% if a.reason %} – {{ a.reason|truncatechars:60 }}{% endif %}</div>
+      </div>
+      {% empty %}<p class="tmut tsm">{% trans "No appointments yet." %}</p>{% endfor %}
+    </div>
+  </div>
+</div>
+<div class="card mt4">
+  <div class="ch"><span class="ct">{% trans "Medical Records" %}</span><a href="{% url 'medical_record_create' patient.pk %}" class="btn btn-pri btn-sm">+ {% trans "Add Record" %}</a></div>
+  <div class="tw"><table>
+    <thead><tr><th>{% trans "Date" %}</th><th>{% trans "Doctor" %}</th><th>{% trans "Chief Complaint" %}</th><th>{% trans "Diagnosis" %}</th><th>{% trans "Follow-up" %}</th></tr></thead>
+    <tbody>
+    {% for r in records %}
+    <tr>
+      <td>{{ r.date|date:"d M Y" }}</td>
+      <td>{% if r.doctor %}Dr. {{ r.doctor.last_name }}{% else %}—{% endif %}</td>
+      <td>{{ r.chief_complaint|truncatechars:80 }}</td>
+      <td>{{ r.diagnosis|truncatechars:80 }}</td>
+      <td>{{ r.follow_up_date|date:"d M Y"|default:"—" }}</td>
+    </tr>
+    {% empty %}<tr><td colspan="5" style="text-align:center;padding:24px;color:#94a3b8;">{% trans "No records yet." %}</td></tr>{% endfor %}
+    </tbody>
+  </table></div>
+</div>
+<div class="g2 mt4">
+  <div class="card">
+    <div class="ch"><span class="ct">{% trans "Prescriptions" %}</span><a href="{% url 'prescription_create_for_patient' patient.pk %}" class="btn btn-pri btn-sm">+ {% trans "Prescribe" %}</a></div>
+    <div class="cb">
+      {% for rx in prescriptions %}
+      <div style="padding:8px 0;border-bottom:1px solid #f1f5f9;">
+        <div class="flex jb ic"><span style="font-weight:600;">Rx #{{ rx.pk }} – {{ rx.date|date:"d M Y" }}</span>
+        <span class="badge {% if rx.is_dispensed %}bg-green{% else %}bg-yellow{% endif %}">{% if rx.is_dispensed %}{% trans "Dispensed" %}{% else %}{% trans "Pending" %}{% endif %}</span></div>
+        <div class="tmut tsm">{{ rx.items.count }} {% trans "item(s)" %} | Dr. {{ rx.doctor.last_name }}</div>
+      </div>
+      {% empty %}<p class="tmut tsm">{% trans "No prescriptions." %}</p>{% endfor %}
+    </div>
+  </div>
+  <div class="card">
+    <div class="ch"><span class="ct">{% trans "Bills" %}</span><a href="{% url 'bill_create_for_patient' patient.pk %}" class="btn btn-pri btn-sm">+ {% trans "New Bill" %}</a></div>
+    <div class="cb">
+      {% for b in bills %}
+      <div style="padding:8px 0;border-bottom:1px solid #f1f5f9;">
+        <div class="flex jb ic">
+          <a href="{% url 'bill_detail' b.pk %}" style="font-weight:600;color:#0ea5e9;text-decoration:none;">{% trans "Bill" %} #{{ b.pk }}</a>
+          <span class="badge {% if b.status == 'paid' %}bg-green{% elif b.status == 'partial' %}bg-yellow{% else %}bg-red{% endif %}">{{ b.get_status_display }}</span>
+        </div>
+        <div class="tmut tsm">{{ b.total_amount|floatformat:0 }} XAF – {{ b.date|date:"d M Y" }}</div>
+      </div>
+      {% empty %}<p class="tmut tsm">{% trans "No bills yet." %}</p>{% endfor %}
+    </div>
   </div>
 </div>
 {% endblock %}

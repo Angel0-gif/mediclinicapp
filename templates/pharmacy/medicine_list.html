@@ -1,70 +1,53 @@
-{% extends "base.html" %}{% block title %}Medicines{% endblock %}{% block page_title %}Medicine Inventory{% endblock %}
-{% block topbar_actions %}<a href="{% url 'medicine_create' %}" class="btn btn-pri">+ Add Medicine</a><a href="{% url 'stock_history' %}" class="btn btn-out">Stock History</a>{% endblock %}
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% trans "Medicines" %}{% endblock %}{% block page_title %}{% trans "Medicine Inventory" %}{% endblock %}
+{% block topbar_actions %}<a href="{% url 'medicine_create' %}" class="btn btn-pri">+ {% trans "Add Medicine" %}</a><a href="{% url 'stock_history' %}" class="btn btn-out">{% trans "Stock History" %}</a>{% endblock %}
 {% block content %}
-<div class="card" style="margin-bottom:16px;">
-  <div class="cb">
-    <form method="get" class="flex ic gap2" style="flex-wrap:wrap;">
-      <input type="text" name="q" value="{{ q }}" placeholder="Search medicine…" style="width:240px;">
-      <select name="category" style="width:180px;"><option value="">All Categories</option>
-        {% for c in categories %}<option value="{{ c.pk }}" {% if sel_cat == c.pk|stringformat:"s" %}selected{% endif %}>{{ c.name }}</option>{% endfor %}
-      </select>
-      <button class="btn btn-pri btn-sm" type="submit">Filter</button>
-      <a href="{% url 'medicine_list' %}" class="btn btn-out btn-sm">Reset</a>
-    </form>
-  </div>
-</div>
-<div class="card">
-  <div class="tw"><table>
-    <thead><tr><th>Name</th><th>Category</th><th>Unit</th><th>Stock</th><th>Min Stock</th><th>Sell Price</th><th>Expiry</th><th>Status</th><th>Actions</th></tr></thead>
-    <tbody>
-    {% for m in meds %}
-    <tr>
-      <td><div style="font-weight:600;">{{ m.name }}</div><div class="tmut tsm">{{ m.generic_name }}</div></td>
-      <td>{{ m.category.name|default:"—" }}</td>
-      <td>{{ m.get_unit_display }}</td>
-      <td style="font-weight:700;{% if m.is_low_stock %}color:#dc2626;{% endif %}">{{ m.quantity }}</td>
-      <td class="tmut">{{ m.min_stock }}</td>
-      <td>{{ m.selling_price|floatformat:0 }} XAF</td>
-      <td class="{% if m.is_expired %}tmut{% endif %}" style="{% if m.is_expired %}color:#dc2626;{% endif %}">{{ m.expiry_date|date:"d M Y"|default:"—" }}</td>
-      <td>
-        {% if m.is_expired %}<span class="badge bg-red">Expired</span>
-        {% elif m.is_low_stock %}<span class="badge bg-yellow">Low Stock</span>
-        {% else %}<span class="badge bg-green">OK</span>{% endif %}
-      </td>
-      <td>
-        <div class="flex gap2">
-          <a href="{% url 'medicine_edit' m.pk %}" class="btn btn-out btn-sm">Edit</a>
-          <button onclick="openStock({{ m.pk }},'{{ m.name }}',{{ m.quantity }})" class="btn btn-pri btn-sm">Stock</button>
-        </div>
-      </td>
-    </tr>
-    {% empty %}<tr><td colspan="9" style="text-align:center;padding:32px;color:#94a3b8;">No medicines found.</td></tr>{% endfor %}
-    </tbody>
-  </table></div>
-</div>
-<!-- STOCK MODAL -->
+<div class="card" style="margin-bottom:16px;"><div class="cb">
+  <form method="get" class="flex ic gap2" style="flex-wrap:wrap;">
+    <input type="text" name="q" value="{{ q }}" placeholder="{% trans 'Search medicine…' %}" style="width:240px;">
+    <select name="category" style="width:180px;"><option value="">{% trans "All Categories" %}</option>
+      {% for c in categories %}<option value="{{ c.pk }}" {% if sel_cat == c.pk|stringformat:"s" %}selected{% endif %}>{{ c.name }}</option>{% endfor %}
+    </select>
+    <button class="btn btn-pri btn-sm" type="submit">{% trans "Filter" %}</button>
+    <a href="{% url 'medicine_list' %}" class="btn btn-out btn-sm">{% trans "Reset" %}</a>
+  </form>
+</div></div>
+<div class="card"><div class="tw"><table>
+  <thead><tr><th>{% trans "Name" %}</th><th>{% trans "Category" %}</th><th>{% trans "Unit" %}</th><th>{% trans "Stock" %}</th><th>{% trans "Min Stock" %}</th><th>{% trans "Sell Price" %}</th><th>{% trans "Expiry" %}</th><th>{% trans "Status" %}</th><th>{% trans "Actions" %}</th></tr></thead>
+  <tbody>
+  {% for m in meds %}
+  <tr>
+    <td><div style="font-weight:600;">{{ m.name }}</div><div class="tmut tsm">{{ m.generic_name }}</div></td>
+    <td>{{ m.category.name|default:"—" }}</td><td>{{ m.get_unit_display }}</td>
+    <td style="font-weight:700;{% if m.is_low_stock %}color:#dc2626;{% endif %}">{{ m.quantity }}</td>
+    <td class="tmut">{{ m.min_stock }}</td><td>{{ m.selling_price|floatformat:0 }} XAF</td>
+    <td style="{% if m.is_expired %}color:#dc2626;{% endif %}">{{ m.expiry_date|date:"d M Y"|default:"—" }}</td>
+    <td>{% if m.is_expired %}<span class="badge bg-red">{% trans "Expired" %}</span>{% elif m.is_low_stock %}<span class="badge bg-yellow">{% trans "Low Stock" %}</span>{% else %}<span class="badge bg-green">OK</span>{% endif %}</td>
+    <td><div class="flex gap2"><a href="{% url 'medicine_edit' m.pk %}" class="btn btn-out btn-sm">{% trans "Edit" %}</a><button onclick="openStock({{ m.pk }},'{{ m.name }}',{{ m.quantity }})" class="btn btn-pri btn-sm">{% trans "Stock" %}</button></div></td>
+  </tr>
+  {% empty %}<tr><td colspan="9" style="text-align:center;padding:32px;color:#94a3b8;">{% trans "No medicines found." %}</td></tr>{% endfor %}
+  </tbody>
+</table></div></div>
 <div id="stockModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:999;align-items:center;justify-content:center;">
   <div class="card" style="width:420px;max-width:95vw;">
-    <div class="ch"><span class="ct" id="stockTitle">Stock Movement</span><button onclick="document.getElementById('stockModal').style.display='none'" class="btn btn-out btn-sm">✕</button></div>
-    <div class="cb">
-      <form method="post" id="stockForm">{% csrf_token %}
-        <div class="fg"><label>Movement Type *</label>
-          <select name="movement_type">
-            <option value="in">Stock In (Received)</option>
-            <option value="out">Stock Out (Used/Sold)</option>
-            <option value="adjustment">Adjustment (Set exact qty)</option>
-          </select></div>
-        <div class="fg"><label>Quantity *</label><input type="number" name="quantity" min="1" required id="stockQty"></div>
-        <div class="fg"><label>Unit Price (XAF)</label><input type="number" name="unit_price" step="0.01" placeholder="0"></div>
-        <div class="fg"><label>Reason</label><input type="text" name="reason" placeholder="Optional reason…"></div>
-        <div class="mt4 flex gap2"><button type="submit" class="btn btn-pri">Save</button><button type="button" onclick="document.getElementById('stockModal').style.display='none'" class="btn btn-out">Cancel</button></div>
-      </form>
-    </div>
+    <div class="ch"><span class="ct" id="stockTitle">{% trans "Stock Movement" %}</span><button onclick="document.getElementById('stockModal').style.display='none'" class="btn btn-out btn-sm">✕</button></div>
+    <div class="cb"><form method="post" id="stockForm">{% csrf_token %}
+      <div class="fg"><label>{% trans "Movement Type" %} *</label>
+        <select name="movement_type">
+          <option value="in">{% trans "Stock In (Received)" %}</option>
+          <option value="out">{% trans "Stock Out (Used/Sold)" %}</option>
+          <option value="adjustment">{% trans "Adjustment (Set exact qty)" %}</option>
+        </select></div>
+      <div class="fg"><label>{% trans "Quantity" %} *</label><input type="number" name="quantity" min="1" required id="stockQty"></div>
+      <div class="fg"><label>{% trans "Unit Price" %} (XAF)</label><input type="number" name="unit_price" step="0.01" placeholder="0"></div>
+      <div class="fg"><label>{% trans "Reason" %}</label><input type="text" name="reason" placeholder="{% trans 'Optional reason…' %}"></div>
+      <div class="mt4 flex gap2"><button type="submit" class="btn btn-pri">{% trans "Save" %}</button><button type="button" onclick="document.getElementById('stockModal').style.display='none'" class="btn btn-out">{% trans "Cancel" %}</button></div>
+    </form></div>
   </div>
 </div>
 <script>
 function openStock(pk,name,qty){
-  document.getElementById('stockTitle').textContent='Stock: '+name+' (current: '+qty+')';
+  document.getElementById('stockTitle').textContent='{% trans "Stock" %}: '+name+' ({% trans "current" %}: '+qty+')';
   document.getElementById('stockForm').action='/pharmacy/'+pk+'/stock/';
   document.getElementById('stockModal').style.display='flex';
   document.getElementById('stockQty').focus();

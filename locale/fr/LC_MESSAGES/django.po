@@ -5,7 +5,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fr\n"
 
-# ── Sidebar sections ──
 msgid "Overview"
 msgstr "Aperçu"
 
@@ -27,7 +26,6 @@ msgstr "Analytique"
 msgid "My Health"
 msgstr "Ma Santé"
 
-# ── Sidebar nav links ──
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
@@ -76,12 +74,11 @@ msgstr "Mon Profil"
 msgid "Sign Out"
 msgstr "Se Déconnecter"
 
-# ── Topbar buttons ──
 msgid "New Patient"
 msgstr "Nouveau Patient"
 
 msgid "Appointment"
-msgstr "Rendez-vous"
+msgstr "Rendez-vous court"
 
 msgid "New Appointment"
 msgstr "Nouveau Rendez-vous"
@@ -101,18 +98,8 @@ msgstr "Nouveau Médicament"
 msgid "New Prescription"
 msgstr "Nouvelle Ordonnance"
 
-# ── Page titles ──
-msgid "Dashboard"
-msgstr "Tableau de bord"
-
-msgid "Patient List"
-msgstr "Liste des Patients"
-
-msgid "Schedule Appointment"
-msgstr "Planifier un Rendez-vous"
-
 msgid "Finance Overview"
-msgstr "Vue d'ensemble Financière"
+msgstr "Vue Financière"
 
 msgid "Medicine Inventory"
 msgstr "Inventaire des Médicaments"
@@ -121,14 +108,13 @@ msgid "Staff Directory"
 msgstr "Répertoire du Personnel"
 
 msgid "Reports & Analytics"
-msgstr "Rapports & Analytique"
+msgstr "Rapports et Analytique"
 
-# ── Dashboard stat labels ──
 msgid "Total Patients"
 msgstr "Total Patients"
 
 msgid "Today's Appointments"
-msgstr "Rendez-vous Aujourd'hui"
+msgstr "Rendez-vous du Jour"
 
 msgid "Today's Appts"
 msgstr "RDV Aujourd'hui"
@@ -137,7 +123,7 @@ msgid "Low Stock"
 msgstr "Stock Faible"
 
 msgid "Low Stock Medicines"
-msgstr "Médicaments en Stock Faible"
+msgstr "Médicaments Stock Faible"
 
 msgid "Income Today (XAF)"
 msgstr "Revenus Aujourd'hui (XAF)"
@@ -152,19 +138,16 @@ msgid "Expenses (XAF)"
 msgstr "Dépenses (XAF)"
 
 msgid "Net Cash Today (XAF)"
-msgstr "Trésorerie Nette Aujourd'hui (XAF)"
-
-msgid "Net Cash (XAF)"
 msgstr "Trésorerie Nette (XAF)"
 
+msgid "Net Cash (XAF)"
+msgstr "Tréso. Nette (XAF)"
+
 msgid "7-Day Cash Flow Overview"
-msgstr "Aperçu des Flux de Trésorerie sur 7 Jours"
+msgstr "Flux de Trésorerie 7 Jours"
 
 msgid "Finance Details"
 msgstr "Détails Financiers"
-
-msgid "Today's Appointments"
-msgstr "Rendez-vous du Jour"
 
 msgid "View All"
 msgstr "Voir Tout"
@@ -178,7 +161,6 @@ msgstr "Tous les niveaux de stock sont adéquats"
 msgid "No appointments scheduled today."
 msgstr "Aucun rendez-vous prévu aujourd'hui."
 
-# ── Common buttons ──
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -215,7 +197,6 @@ msgstr "Générer"
 msgid "Dispense"
 msgstr "Délivrer"
 
-# ── Patient module ──
 msgid "Register New Patient"
 msgstr "Enregistrer un Nouveau Patient"
 
@@ -276,7 +257,6 @@ msgstr "Aucune facture pour l'instant."
 msgid "No records yet."
 msgstr "Aucun dossier pour l'instant."
 
-# ── Appointment module ──
 msgid "Appointment Details"
 msgstr "Détails du Rendez-vous"
 
@@ -343,7 +323,6 @@ msgstr "Vaccination"
 msgid "Procedure"
 msgstr "Procédure"
 
-# ── Pharmacy module ──
 msgid "Medicine Information"
 msgstr "Informations Médicament"
 
@@ -374,12 +353,6 @@ msgstr "Expiration"
 msgid "Expired"
 msgstr "Expiré"
 
-msgid "Low Stock"
-msgstr "Stock Faible"
-
-msgid "Stock History"
-msgstr "Historique des Stocks"
-
 msgid "Prescription Details"
 msgstr "Détails de l'Ordonnance"
 
@@ -389,7 +362,6 @@ msgstr "Délivré"
 msgid "Pending"
 msgstr "En Attente"
 
-# ── Finance module ──
 msgid "Bill Summary"
 msgstr "Résumé de la Facture"
 
@@ -432,7 +404,6 @@ msgstr "Factures en Attente"
 msgid "No pending bills"
 msgstr "Aucune facture en attente"
 
-# ── Staff / HR module ──
 msgid "Staff Information"
 msgstr "Informations du Personnel"
 
@@ -490,7 +461,6 @@ msgstr "Marquer Payé"
 msgid "Paid"
 msgstr "Payé"
 
-# ── Reports ──
 msgid "Financial Report"
 msgstr "Rapport Financier"
 
@@ -518,7 +488,6 @@ msgstr "Par Groupe Sanguin"
 msgid "New This Month"
 msgstr "Nouveaux ce Mois"
 
-# ── Auth ──
 msgid "Welcome back"
 msgstr "Bon retour"
 
@@ -549,7 +518,6 @@ msgstr "Prénom"
 msgid "Last Name"
 msgstr "Nom"
 
-# ── Patient portal ──
 msgid "My Health Portal"
 msgstr "Mon Portail Santé"
 
@@ -562,12 +530,8 @@ msgstr "Mes Rendez-vous"
 msgid "My Prescriptions"
 msgstr "Mes Ordonnances"
 
-# ── Role names ──
 msgid "Administrator"
 msgstr "Administrateur"
-
-msgid "Doctor"
-msgstr "Médecin"
 
 msgid "Nurse"
 msgstr "Infirmière"
@@ -578,10 +542,6 @@ msgstr "Caissier"
 msgid "Receptionist"
 msgstr "Réceptionniste"
 
-msgid "Patient"
-msgstr "Patient"
-
-# ── Language toggle ──
 msgid "Language"
 msgstr "Langue"
 
@@ -590,3 +550,126 @@ msgstr "Anglais"
 
 msgid "French"
 msgstr "Français"
+
+msgid "Schedule Appointment"
+msgstr "Planifier un Rendez-vous"
+
+msgid "Appointment for"
+msgstr "Rendez-vous pour"
+
+msgid "Unassigned"
+msgstr "Non assigné"
+
+msgid "Reason for visit"
+msgstr "Motif de la visite"
+
+msgid "Schedule"
+msgstr "Planifier"
+
+msgid "Add Medicine"
+msgstr "Ajouter Médicament"
+
+msgid "Save Record"
+msgstr "Enregistrer le Dossier"
+
+msgid "Create Bill"
+msgstr "Créer une Facture"
+
+msgid "Bill Items"
+msgstr "Articles de la Facture"
+
+msgid "Add Item"
+msgstr "Ajouter un Article"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Quantity"
+msgstr "Quantité"
+
+msgid "Unit Price"
+msgstr "Prix Unitaire"
+
+msgid "Subtotal"
+msgstr "Sous-total"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Record Transaction"
+msgstr "Enregistrer une Transaction"
+
+msgid "Transaction Details"
+msgstr "Détails de la Transaction"
+
+msgid "Amount"
+msgstr "Montant"
+
+msgid "Reference"
+msgstr "Référence"
+
+msgid "Generate Payroll"
+msgstr "Générer la Paie"
+
+msgid "All Bills"
+msgstr "Toutes les Factures"
+
+msgid "Bills & Invoices"
+msgstr "Factures et Reçus"
+
+msgid "Stock Movement History"
+msgstr "Historique des Mouvements de Stock"
+
+msgid "Daily Attendance"
+msgstr "Présences Journalières"
+
+msgid "Add Medical Record"
+msgstr "Ajouter un Dossier Médical"
+
+msgid "New Medical Record"
+msgstr "Nouveau Dossier Médical"
+
+msgid "Chief Complaint"
+msgstr "Plainte Principale"
+
+msgid "Diagnosis"
+msgstr "Diagnostic"
+
+msgid "Treatment"
+msgstr "Traitement"
+
+msgid "Follow-up Date"
+msgstr "Date de Suivi"
+
+msgid "Additional Notes"
+msgstr "Notes Supplémentaires"
+
+msgid "No patients found."
+msgstr "Aucun patient trouvé."
+
+msgid "No staff members."
+msgstr "Aucun membre du personnel."
+
+msgid "No transactions."
+msgstr "Aucune transaction."
+
+msgid "No payroll generated."
+msgstr "Aucune paie générée."
+
+msgid "No movements yet."
+msgstr "Aucun mouvement pour l'instant."
+
+msgid "No prescriptions yet."
+msgstr "Aucune ordonnance pour l'instant."
+
+msgid "No medicines found."
+msgstr "Aucun médicament trouvé."
+
+msgid "No appointments found."
+msgstr "Aucun rendez-vous trouvé."
+
+msgid "Patient portal"
+msgstr "Portail patient"
+
+msgid "No patient record linked."
+msgstr "Aucun dossier patient lié."

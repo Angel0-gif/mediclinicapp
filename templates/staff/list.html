@@ -1,21 +1,33 @@
-{% extends "base.html" %}{% block title %}Staff{% endblock %}{% block page_title %}Staff Directory{% endblock %}
-{% block topbar_actions %}<a href="{% url 'register' %}" class="btn btn-pri">+ New Staff</a><a href="{% url 'attendance_today' %}" class="btn btn-out">Attendance</a>{% endblock %}
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% trans "Patients" %}{% endblock %}{% block page_title %}{% trans "Patients" %}{% endblock %}
+{% block topbar_actions %}<a href="{% url 'patient_create' %}" class="btn btn-pri">+ {% trans "New Patient" %}</a>{% endblock %}
 {% block content %}
 <div class="card">
+  <div class="ch">
+    <form method="get" class="flex ic gap2">
+      <input type="text" name="q" value="{{ q }}" placeholder="{% trans 'Search name, phone…' %}" style="width:280px;">
+      <button class="btn btn-pri btn-sm" type="submit">{% trans "Search" %}</button>
+      {% if q %}<a href="{% url 'patient_list' %}" class="btn btn-out btn-sm">{% trans "Clear" %}</a>{% endif %}
+    </form>
+    <span class="tmut tsm">{{ patients|length }} {% trans "patient(s)" %}</span>
+  </div>
   <div class="tw"><table>
-    <thead><tr><th>Name</th><th>Role</th><th>Department</th><th>Employment</th><th>Hire Date</th><th>Salary (XAF)</th><th>Actions</th></tr></thead>
+    <thead><tr><th>#</th><th>{% trans "Name" %}</th><th>{% trans "Age" %}</th><th>{% trans "Gender" %}</th><th>{% trans "Blood" %}</th><th>{% trans "Phone" %}</th><th>{% trans "Registered" %}</th><th>{% trans "Actions" %}</th></tr></thead>
     <tbody>
-    {% for s in staff %}
+    {% for p in patients %}
     <tr>
-      <td><div style="font-weight:600;">{{ s.user.get_full_name }}</div><div class="tmut tsm">{{ s.user.email }}</div></td>
-      <td><span class="badge bg-blue">{{ s.user.profile.role|title }}</span></td>
-      <td>{{ s.get_department_display }}</td>
-      <td class="tmut">{{ s.get_employment_type_display }}</td>
-      <td class="tmut">{{ s.hire_date|date:"d M Y" }}</td>
-      <td style="font-weight:600;">{{ s.salary|floatformat:0 }}</td>
-      <td><a href="{% url 'staff_detail' s.pk %}" class="btn btn-out btn-sm">View</a></td>
+      <td class="tmut">{{ forloop.counter }}</td>
+      <td><a href="{% url 'patient_detail' p.pk %}" style="font-weight:600;color:#0ea5e9;text-decoration:none;">{{ p.full_name }}</a></td>
+      <td>{{ p.age }} {% trans "yrs" %}</td><td>{{ p.get_gender_display }}</td>
+      <td><span class="badge bg-red">{{ p.blood_group|default:"—" }}</span></td>
+      <td>{{ p.phone }}</td>
+      <td class="tmut">{{ p.registered_at|date:"d M Y" }}</td>
+      <td class="flex gap2">
+        <a href="{% url 'patient_detail' p.pk %}" class="btn btn-out btn-sm">{% trans "View" %}</a>
+        <a href="{% url 'patient_edit' p.pk %}" class="btn btn-out btn-sm">{% trans "Edit" %}</a>
+      </td>
     </tr>
-    {% empty %}<tr><td colspan="7" style="text-align:center;padding:32px;color:#94a3b8;">No staff members.</td></tr>{% endfor %}
+    {% empty %}<tr><td colspan="8" style="text-align:center;padding:32px;color:#94a3b8;">{% trans "No patients found." %}</td></tr>{% endfor %}
     </tbody>
   </table></div>
 </div>
